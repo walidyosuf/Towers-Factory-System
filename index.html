@@ -42,6 +42,54 @@
             overflow-x: hidden;
         }
 
+        /* RTL Support */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .rtl .text-right {
+            text-align: left !important;
+        }
+
+        .rtl .text-left {
+            text-align: right !important;
+        }
+
+        .rtl .ml-2 {
+            margin-left: 0 !important;
+            margin-right: 0.5rem !important;
+        }
+
+        .rtl .mr-2 {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        .rtl .flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        .rtl .text-start {
+            text-align: end !important;
+        }
+
+        .rtl .text-end {
+            text-align: start !important;
+        }
+
+        .rtl .float-right {
+            float: left !important;
+        }
+
+        .rtl .float-left {
+            float: right !important;
+        }
+
+        .rtl .table th {
+            text-align: right;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding-left: 0.5rem;
@@ -142,6 +190,16 @@
 
         @keyframes slideIn {
             from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(120%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-120%); }
             to { transform: translateX(0); }
         }
 
@@ -394,14 +452,19 @@
 
         .toast-container {
             position: fixed;
-            top: 1rem;
-            left: 1rem;
+            top: 20px;
+            right: 20px;
             z-index: 9999;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             max-width: 400px;
-            width: 90%;
+            width: auto;
+        }
+
+        .rtl .toast-container {
+            left: 20px;
+            right: auto;
         }
 
         .toast {
@@ -410,14 +473,24 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            animation: slideIn 0.3s ease-out;
+            animation: slideInRight 0.3s ease-out;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             color: white;
-            transform: translateX(-120%);
+            transform: translateX(120%);
             transition: transform 0.3s ease-out;
+            max-width: 350px;
+        }
+
+        .rtl .toast {
+            animation: slideInLeft 0.3s ease-out;
+            transform: translateX(-120%);
         }
 
         .toast.show {
+            transform: translateX(0);
+        }
+
+        .rtl .toast.show {
             transform: translateX(0);
         }
 
@@ -447,6 +520,11 @@
             padding: 0.25rem;
         }
 
+        .rtl .toast-close {
+            margin-right: 0;
+            margin-left: auto;
+        }
+
         .toast-close:hover {
             opacity: 1;
         }
@@ -469,13 +547,13 @@
             border-bottom: 2px solid #e5e7eb;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            background-color: #1e40af; /* Added background color for tabs */
+            background-color: #1e40af;
         }
 
         .tab {
             padding: 0.875rem 1.25rem;
             font-weight: 600;
-            color: #ffffff; /* Changed to white for better visibility */
+            color: #ffffff;
             border-bottom: 3px solid transparent;
             white-space: nowrap;
             cursor: pointer;
@@ -486,13 +564,13 @@
         }
 
         .tab:hover {
-            color: #fbbf24; /* Changed to yellow on hover for better visibility */
+            color: #fbbf24;
             background: rgba(255, 255, 255, 0.1);
         }
 
         .tab.active {
-            color: #ffffff; /* Changed to white for active tab */
-            border-bottom-color: #fbbf24; /* Changed to yellow for active tab */
+            color: #ffffff;
+            border-bottom-color: #fbbf24;
             background: rgba(255, 255, 255, 0.1);
         }
 
@@ -520,6 +598,10 @@
             position: sticky;
             top: 0;
             z-index: 10;
+        }
+
+        .rtl .table th {
+            text-align: right;
         }
 
         .table td {
@@ -564,16 +646,21 @@
             }
             
             .tabs {
-                background-color: #1e40af; /* Ensure background color on mobile */
+                background-color: #1e40af;
             }
             
             .tab {
-                color: #ffffff; /* Ensure white text on mobile */
+                color: #ffffff;
             }
             
             .tab.active {
-                color: #ffffff; /* Ensure white text for active tab on mobile */
-                border-bottom-color: #fbbf24; /* Ensure yellow border for active tab on mobile */
+                color: #ffffff;
+                border-bottom-color: #fbbf24;
+            }
+            
+            .rtl .toast-container {
+                left: 10px;
+                right: auto;
             }
         }
 
@@ -662,16 +749,16 @@
             }
             
             .tabs {
-                background-color: #1e40af; /* Keep blue background in dark mode */
+                background-color: #1e40af;
             }
             
             .tab {
-                color: #ffffff; /* Keep white text in dark mode */
+                color: #ffffff;
             }
             
             .tab.active {
-                color: #ffffff; /* Keep white text for active tab in dark mode */
-                border-bottom-color: #fbbf24; /* Keep yellow border for active tab in dark mode */
+                color: #ffffff;
+                border-bottom-color: #fbbf24;
             }
         }
 
@@ -694,52 +781,14 @@
             transition: all 0.3s ease;
         }
 
+        .rtl .scroll-to-top {
+            right: auto;
+            left: 20px;
+        }
+
         .scroll-to-top:hover {
             background: #1e3a8a;
             transform: translateY(-2px);
-        }
-
-        /* Searchable dropdown */
-        .searchable-select {
-            position: relative;
-        }
-
-        .searchable-select input {
-            width: 100%;
-        }
-
-        .searchable-select .dropdown-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            max-height: 200px;
-            overflow-y: auto;
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            z-index: 100;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .searchable-select .dropdown-list.active {
-            display: block;
-        }
-
-        .searchable-select .dropdown-item {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .searchable-select .dropdown-item:hover {
-            background: #f3f4f6;
-        }
-
-        .searchable-select .dropdown-item.selected {
-            background: var(--primary-color);
-            color: white;
         }
 
         /* Status indicators */
@@ -758,29 +807,53 @@
         .completed-first {
             background: #f0fdf4 !important;
         }
+        
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .language-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 ltr">
     <!-- Header -->
     <header class="bg-blue-900 text-white shadow-lg no-print">
         <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3 mobile-text-center">
                 <i class="fa-solid fa-tower-cell text-3xl text-yellow-400"></i>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold">Tower Manufacturing Management System</h1>
-                    <p class="text-xs md:text-sm text-blue-200">66KV - 220KV - 500KV - Telecom</p>
+                    <h1 class="text-xl md:text-2xl font-bold" data-i18n="appTitle">Tower Manufacturing Management System</h1>
+                    <p class="text-xs md:text-sm text-blue-200" data-i18n="appSubtitle">66KV - 220KV - 500KV - Telecom</p>
                 </div>
             </div>
-            <div class="flex flex-wrap gap-2 justify-center">
-                <button onclick="showOperatorsManagement()" class="btn btn-warning btn-sm">
-                    <i class="fa-solid fa-users-gear"></i> Manage Operators
-                </button>
-                <button onclick="showBackupModal()" class="btn btn-secondary btn-sm">
-                    <i class="fa-solid fa-download ml-1"></i> Backup
-                </button>
-                <button onclick="clearDatabase()" class="btn btn-danger btn-sm">
-                    <i class="fa-solid fa-trash-can ml-1"></i> Clear Database
-                </button>
+            
+            <div class="flex items-center gap-4">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button onclick="setLanguage('en')" class="btn btn-sm btn-outline language-btn ${currentLanguage === 'en' ? 'active' : ''}" id="btnEn">
+                        <i class="fa-solid fa-language"></i> EN
+                    </button>
+                    <button onclick="setLanguage('ar')" class="btn btn-sm btn-outline language-btn ${currentLanguage === 'ar' ? 'active' : ''}" id="btnAr">
+                        <i class="fa-solid fa-language"></i> عربي
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button onclick="showOperatorsManagement()" class="btn btn-warning btn-sm">
+                        <i class="fa-solid fa-users-gear"></i> <span data-i18n="manageOperators">Manage Operators</span>
+                    </button>
+                    <button onclick="showBackupModal()" class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-download ml-1"></i> <span data-i18n="backup">Backup</span>
+                    </button>
+                    <button onclick="clearDatabase()" class="btn btn-danger btn-sm">
+                        <i class="fa-solid fa-trash-can ml-1"></i> <span data-i18n="clearDatabase">Clear Database</span>
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -789,23 +862,23 @@
             <div class="tabs">
                 <button onclick="switchTab('dashboard')" class="tab">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span class="mobile-hidden">Dashboard</span>
+                    <span class="mobile-hidden" data-i18n="dashboard">Dashboard</span>
                 </button>
                 <button onclick="switchTab('models')" class="tab active">
                     <i class="fa-solid fa-database"></i>
-                    <span class="mobile-hidden">Database</span>
+                    <span class="mobile-hidden" data-i18n="database">Database</span>
                 </button>
                 <button onclick="switchTab('workOrder')" class="tab">
                     <i class="fa-solid fa-file-circle-plus"></i>
-                    <span class="mobile-hidden">Work Orders</span>
+                    <span class="mobile-hidden" data-i18n="workOrders">Work Orders</span>
                 </button>
                 <button onclick="switchTab('production')" class="tab">
                     <i class="fa-solid fa-industry"></i>
-                    <span class="mobile-hidden">Daily Production</span>
+                    <span class="mobile-hidden" data-i18n="dailyProduction">Daily Production</span>
                 </button>
                 <button onclick="switchTab('reports')" class="tab">
                     <i class="fa-solid fa-chart-column"></i>
-                    <span class="mobile-hidden">Reports</span>
+                    <span class="mobile-hidden" data-i18n="reports">Reports</span>
                 </button>
             </div>
         </div>
@@ -818,10 +891,10 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-xl font-bold">
-                        <i class="fa-solid fa-gauge-high mr-2 text-blue-600"></i>Production Dashboard
+                        <i class="fa-solid fa-gauge-high mr-2 text-blue-600"></i><span data-i18n="productionDashboard">Production Dashboard</span>
                     </h2>
                     <button onclick="refreshDashboard()" class="btn btn-outline btn-sm">
-                        <i class="fa-solid fa-rotate"></i> Refresh
+                        <i class="fa-solid fa-rotate"></i> <span data-i18n="refresh">Refresh</span>
                     </button>
                 </div>
                 <div class="card-body">
@@ -831,7 +904,7 @@
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <span class="block text-2xl font-bold text-blue-600" id="dashboardActiveWorkOrders">0</span>
-                                        <span class="text-sm text-gray-600">Active Work Orders</span>
+                                        <span class="text-sm text-gray-600" data-i18n="activeWorkOrders">Active Work Orders</span>
                                     </div>
                                     <i class="fa-solid fa-file-contract text-2xl text-blue-400"></i>
                                 </div>
@@ -845,7 +918,7 @@
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <span class="block text-2xl font-bold text-green-600" id="dashboardTotalItems">0</span>
-                                        <span class="text-sm text-gray-600">Items in Production</span>
+                                        <span class="text-sm text-gray-600" data-i18n="itemsInProduction">Items in Production</span>
                                     </div>
                                     <i class="fa-solid fa-industry text-2xl text-green-400"></i>
                                 </div>
@@ -859,7 +932,7 @@
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <span class="block text-2xl font-bold text-purple-600" id="dashboardCompletedToday">0</span>
-                                        <span class="text-sm text-gray-600">Completed Today</span>
+                                        <span class="text-sm text-gray-600" data-i18n="completedToday">Completed Today</span>
                                     </div>
                                     <i class="fa-solid fa-calendar-check text-2xl text-purple-400"></i>
                                 </div>
@@ -873,7 +946,7 @@
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <span class="block text-2xl font-bold text-orange-600" id="dashboardPendingOperations">0</span>
-                                        <span class="text-sm text-gray-600">Pending Operations</span>
+                                        <span class="text-sm text-gray-600" data-i18n="pendingOperations">Pending Operations</span>
                                     </div>
                                     <i class="fa-solid fa-clock text-2xl text-orange-400"></i>
                                 </div>
@@ -888,7 +961,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="text-lg font-bold">
-                                <i class="fa-solid fa-list-check mr-2 text-blue-600"></i>Active Work Orders Progress
+                                <i class="fa-solid fa-list-check mr-2 text-blue-600"></i><span data-i18n="activeWorkOrdersProgress">Active Work Orders Progress</span>
                             </h3>
                         </div>
                         <div class="card-body">
@@ -902,7 +975,7 @@
                     <div class="card mt-6">
                         <div class="card-header">
                             <h3 class="text-lg font-bold">
-                                <i class="fa-solid fa-chart-line mr-2 text-green-600"></i>Recent Production
+                                <i class="fa-solid fa-chart-line mr-2 text-green-600"></i><span data-i18n="recentProduction">Recent Production</span>
                             </h3>
                         </div>
                         <div class="card-body">
@@ -921,7 +994,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-xl font-bold">
-                        <i class="fa-solid fa-database mr-2 text-blue-600"></i>Models Database
+                        <i class="fa-solid fa-database mr-2 text-blue-600"></i><span data-i18n="modelsDatabase">Models Database</span>
                     </h2>
                 </div>
                 <div class="card-body">
@@ -931,9 +1004,9 @@
                             <form id="uploadForm" class="space-y-4">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="input-group">
-                                        <label class="input-label">Tower Type</label>
+                                        <label class="input-label" data-i18n="towerType">Tower Type</label>
                                         <select id="towerType" class="input-field" required>
-                                            <option value="" disabled selected>Select type...</option>
+                                            <option value="" disabled selected data-i18n="selectType">Select type...</option>
                                             <option value="66KV">66KV</option>
                                             <option value="220KV">220KV</option>
                                             <option value="500KV">500KV</option>
@@ -941,24 +1014,24 @@
                                         </select>
                                     </div>
                                     <div class="input-group">
-                                        <label class="input-label">Model Name</label>
+                                        <label class="input-label" data-i18n="modelName">Model Name</label>
                                         <input type="text" id="modelName" placeholder="Example: T220-A1" class="input-field" required>
                                     </div>
                                 </div>
                                 
                                 <div class="input-group">
-                                    <label class="input-label">Upload Excel File</label>
+                                    <label class="input-label" data-i18n="uploadExcelFile">Upload Excel File</label>
                                     <div class="backup-card p-6 rounded-lg text-center cursor-pointer" onclick="document.getElementById('fileInput').click()">
                                         <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-400 mb-3"></i>
-                                        <p class="text-sm font-medium text-gray-700 mb-1">Click to upload or drag & drop</p>
-                                        <p class="text-xs text-gray-500">File must contain required columns</p>
+                                        <p class="text-sm font-medium text-gray-700 mb-1" data-i18n="clickToUpload">Click to upload or drag & drop</p>
+                                        <p class="text-xs text-gray-500" data-i18n="fileMustContain">File must contain required columns</p>
                                         <input type="file" id="fileInput" accept=".xlsx,.xls" class="hidden" onchange="handleFileSelect(event)">
                                     </div>
                                     <div id="fileName" class="text-sm text-green-600 mt-2 hidden"></div>
                                 </div>
                                 
                                 <button type="button" onclick="processData()" class="btn btn-primary w-full">
-                                    <i class="fa-solid fa-upload"></i> Process & Save Data
+                                    <i class="fa-solid fa-upload"></i> <span data-i18n="processSaveData">Process & Save Data</span>
                                 </button>
                             </form>
                         </div>
@@ -968,13 +1041,13 @@
                             <div class="card bg-blue-50 border-blue-200">
                                 <div class="card-body">
                                     <h3 class="font-bold text-blue-800 mb-2">
-                                        <i class="fa-solid fa-circle-info mr-2"></i> Important Information
+                                        <i class="fa-solid fa-circle-info mr-2"></i> <span data-i18n="importantInformation">Important Information</span>
                                     </h3>
                                     <ul class="text-sm text-blue-700 space-y-2 list-disc pl-4">
-                                        <li>Excel file must contain these columns</li>
-                                        <li>Item Name, Section, Steel Grade</li>
-                                        <li>Operations (5 to 7 operations)</li>
-                                        <li>Operations processed automatically</li>
+                                        <li data-i18n="excelMustContain">Excel file must contain these columns</li>
+                                        <li data-i18n="itemNameSection">Item Name, Section, Steel Grade</li>
+                                        <li data-i18n="operations5to7">Operations (5 to 7 operations)</li>
+                                        <li data-i18n="operationsProcessed">Operations processed automatically</li>
                                     </ul>
                                 </div>
                             </div>
@@ -982,16 +1055,16 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="font-bold text-gray-700 mb-2">
-                                        <i class="fa-solid fa-chart-bar mr-2"></i> Statistics
+                                        <i class="fa-solid fa-chart-bar mr-2"></i> <span data-i18n="statistics">Statistics</span>
                                     </h3>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="text-center">
                                             <span id="totalModels" class="block text-2xl font-bold text-blue-600">0</span>
-                                            <span class="text-xs text-gray-500">Models</span>
+                                            <span class="text-xs text-gray-500" data-i18n="models">Models</span>
                                         </div>
                                         <div class="text-center">
                                             <span id="totalItems" class="block text-2xl font-bold text-purple-600">0</span>
-                                            <span class="text-xs text-gray-500">Items</span>
+                                            <span class="text-xs text-gray-500" data-i18n="items">Items</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1005,16 +1078,16 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-lg font-bold">
-                        <i class="fa-solid fa-list mr-2 text-blue-600"></i> Saved Models
+                        <i class="fa-solid fa-list mr-2 text-blue-600"></i> <span data-i18n="savedModels">Saved Models</span>
                     </h3>
                     <div class="relative">
-                        <input type="text" id="searchInput" onkeyup="renderModelsList()" placeholder="Search model..." class="input-field w-64">
+                        <input type="text" id="searchInput" onkeyup="renderModelsList()" placeholder="Search model..." class="input-field w-64" data-i18n-placeholder="searchModel">
                         <i class="fa-solid fa-search absolute right-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
                 <div class="card-body">
                     <div id="modelsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <p class="text-center text-gray-500 col-span-2 py-10">No saved models. Upload your first Excel file.</p>
+                        <p class="text-center text-gray-500 col-span-2 py-10" data-i18n="noSavedModels">No saved models. Upload your first Excel file.</p>
                     </div>
                 </div>
             </div>
@@ -1025,16 +1098,16 @@
                     <div>
                         <h3 class="text-xl font-bold">
                             <i class="fa-solid fa-circle-info mr-2 text-blue-600"></i>
-                            Model Details: <span id="viewTitle"></span>
+                            <span data-i18n="modelDetails">Model Details</span>: <span id="viewTitle"></span>
                         </h3>
                         <span id="viewType" class="text-sm text-gray-500"></span>
                     </div>
                     <div class="action-buttons">
                         <button onclick="exportModelToPDF()" class="btn btn-danger btn-sm">
-                            <i class="fa-solid fa-file-pdf"></i> Export PDF
+                            <i class="fa-solid fa-file-pdf"></i> <span data-i18n="exportPDF">Export PDF</span>
                         </button>
                         <button onclick="hideDetails()" class="btn btn-outline btn-sm">
-                            <i class="fa-solid fa-times"></i> Close
+                            <i class="fa-solid fa-times"></i> <span data-i18n="close">Close</span>
                         </button>
                     </div>
                 </div>
@@ -1044,10 +1117,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Item Name</th>
-                                    <th>Section</th>
-                                    <th>Steel Grade</th>
-                                    <th>Operation Sequence</th>
+                                    <th data-i18n="itemName">Item Name</th>
+                                    <th data-i18n="section">Section</th>
+                                    <th data-i18n="steelGrade">Steel Grade</th>
+                                    <th data-i18n="operationSequence">Operation Sequence</th>
                                 </tr>
                             </thead>
                             <tbody id="detailsTableBody">
@@ -1065,7 +1138,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-xl font-bold">
-                        <i class="fa-solid fa-file-circle-plus mr-2 text-green-600"></i> Create New Work Order
+                        <i class="fa-solid fa-file-circle-plus mr-2 text-green-600"></i> <span data-i18n="createNewWorkOrder">Create New Work Order</span>
                     </h2>
                 </div>
                 <div class="card-body">
@@ -1075,40 +1148,40 @@
                             <form id="workOrderForm" class="space-y-4">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="input-group">
-                                        <label class="input-label">Work Order Name</label>
+                                        <label class="input-label" data-i18n="workOrderName">Work Order Name</label>
                                         <input type="text" id="workOrderName" placeholder="Example: WO-2024-001" class="input-field" required>
                                     </div>
                                     <div class="input-group">
-                                        <label class="input-label">Project Name</label>
+                                        <label class="input-label" data-i18n="projectName">Project Name</label>
                                         <input type="text" id="projectName" placeholder="Example: Northern Network Project" class="input-field" required>
                                     </div>
                                 </div>
                                 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="input-group">
-                                        <label class="input-label">Sales Order Number</label>
+                                        <label class="input-label" data-i18n="salesOrderNumber">Sales Order Number</label>
                                         <input type="text" id="salesOrderNumber" placeholder="Example: SO-2024-1001" class="input-field" required>
                                     </div>
                                     <div class="input-group">
-                                        <label class="input-label">Tower Type</label>
+                                        <label class="input-label" data-i18n="workOrderTowerType">Tower Type</label>
                                         <select id="workOrderTowerType" class="input-field" onchange="populateModelDropdown()" required>
-                                            <option value="" disabled selected>Select type...</option>
+                                            <option value="" disabled selected data-i18n="selectType">Select type...</option>
                                         </select>
                                     </div>
                                 </div>
                                 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="input-group">
-                                        <label class="input-label">Model</label>
+                                        <label class="input-label" data-i18n="model">Model</label>
                                         <select id="workOrderModel" class="input-field" required>
-                                            <option value="" disabled selected>Select model...</option>
+                                            <option value="" disabled selected data-i18n="selectModel">Select model...</option>
                                         </select>
                                     </div>
                                     <div class="input-group">
-                                        <label class="input-label">Upload Work Order File</label>
+                                        <label class="input-label" data-i18n="uploadWorkOrderFile">Upload Work Order File</label>
                                         <div class="backup-card p-4 rounded-lg text-center cursor-pointer" onclick="document.getElementById('workOrderFile').click()">
                                             <i class="fa-solid fa-cloud-arrow-up text-3xl text-green-400 mb-2"></i>
-                                            <p class="text-sm font-medium text-gray-700">Click to upload or drag & drop</p>
+                                            <p class="text-sm font-medium text-gray-700" data-i18n="clickToUpload">Click to upload or drag & drop</p>
                                             <input type="file" id="workOrderFile" accept=".xlsx,.xls" class="hidden" onchange="handleWorkOrderFileSelect(event)">
                                         </div>
                                         <div id="workOrderFileName" class="text-sm text-green-600 mt-2 hidden"></div>
@@ -1116,7 +1189,7 @@
                                 </div>
                                 
                                 <button type="button" onclick="processWorkOrder()" class="btn btn-secondary w-full">
-                                    <i class="fa-solid fa-plus-circle"></i> Create Work Order
+                                    <i class="fa-solid fa-plus-circle"></i> <span data-i18n="createWorkOrder">Create Work Order</span>
                                 </button>
                             </form>
                         </div>
@@ -1126,13 +1199,13 @@
                             <div class="card bg-green-50 border-green-200">
                                 <div class="card-body">
                                     <h3 class="font-bold text-green-800 mb-2">
-                                        <i class="fa-solid fa-lightbulb mr-2"></i> Notes
+                                        <i class="fa-solid fa-lightbulb mr-2"></i> <span data-i18n="notes">Notes</span>
                                     </h3>
                                     <ul class="text-sm text-green-700 space-y-2 list-disc pl-4">
-                                        <li>Select existing model from database</li>
-                                        <li>Operations will be imported from selected model</li>
-                                        <li>Work order file must contain quantities & weights</li>
-                                        <li>Production status updated automatically</li>
+                                        <li data-i18n="selectExistingModel">Select existing model from database</li>
+                                        <li data-i18n="operationsImported">Operations will be imported from selected model</li>
+                                        <li data-i18n="woFileMustContain">Work order file must contain quantities & weights</li>
+                                        <li data-i18n="productionStatusUpdated">Production status updated automatically</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1140,16 +1213,16 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="font-bold text-gray-700 mb-2">
-                                        <i class="fa-solid fa-chart-pie mr-2"></i> Work Orders Statistics
+                                        <i class="fa-solid fa-chart-pie mr-2"></i> <span data-i18n="workOrdersStatistics">Work Orders Statistics</span>
                                     </h3>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="text-center">
                                             <span id="totalWorkOrders" class="block text-2xl font-bold text-green-600">0</span>
-                                            <span class="text-xs text-gray-500">Work Orders</span>
+                                            <span class="text-xs text-gray-500" data-i18n="workOrders">Work Orders</span>
                                         </div>
                                         <div class="text-center">
                                             <span id="workOrderItems" class="block text-2xl font-bold text-orange-600">0</span>
-                                            <span class="text-xs text-gray-500">Items</span>
+                                            <span class="text-xs text-gray-500" data-i18n="items">Items</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1163,16 +1236,16 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-lg font-bold">
-                        <i class="fa-solid fa-file-lines mr-2 text-green-600"></i> Work Orders
+                        <i class="fa-solid fa-file-lines mr-2 text-green-600"></i> <span data-i18n="workOrders">Work Orders</span>
                     </h3>
                     <div class="relative">
-                        <input type="text" id="workOrderSearch" onkeyup="renderWorkOrdersList()" placeholder="Search work orders..." class="input-field w-64">
+                        <input type="text" id="workOrderSearch" onkeyup="renderWorkOrdersList()" placeholder="Search work orders..." class="input-field w-64" data-i18n-placeholder="searchWorkOrders">
                         <i class="fa-solid fa-search absolute right-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
                 <div class="card-body">
                     <div id="workOrdersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <p class="text-center text-gray-500 col-span-2 py-10">No work orders. Create your first work order.</p>
+                        <p class="text-center text-gray-500 col-span-2 py-10" data-i18n="noWorkOrders">No work orders. Create your first work order.</p>
                     </div>
                 </div>
             </div>
@@ -1183,7 +1256,7 @@
                     <div>
                         <h3 class="text-xl font-bold">
                             <i class="fa-solid fa-file-contract mr-2 text-green-600"></i>
-                            Work Order Details: <span id="workOrderTitle"></span>
+                            <span data-i18n="workOrderDetails">Work Order Details</span>: <span id="workOrderTitle"></span>
                         </h3>
                         <div class="flex gap-2 mt-2">
                             <span id="workOrderType" class="badge badge-info"></span>
@@ -1192,16 +1265,16 @@
                     </div>
                     <div class="action-buttons">
                         <button onclick="exportWorkOrderToExcel()" class="btn btn-secondary btn-sm">
-                            <i class="fa-solid fa-file-excel"></i> Excel
+                            <i class="fa-solid fa-file-excel"></i> <span data-i18n="exportExcel">Excel</span>
                         </button>
                         <button onclick="exportWorkOrderToPDF()" class="btn btn-danger btn-sm">
-                            <i class="fa-solid fa-file-pdf"></i> PDF
+                            <i class="fa-solid fa-file-pdf"></i> <span data-i18n="exportPDF">PDF</span>
                         </button>
                         <button onclick="generateWorkOrderStatusReport()" class="btn btn-warning btn-sm">
-                            <i class="fa-solid fa-chart-bar"></i> Report
+                            <i class="fa-solid fa-chart-bar"></i> <span data-i18n="generateReport">Report</span>
                         </button>
                         <button onclick="hideWorkOrderDetails()" class="btn btn-outline btn-sm">
-                            <i class="fa-solid fa-times"></i> Close
+                            <i class="fa-solid fa-times"></i> <span data-i18n="close">Close</span>
                         </button>
                     </div>
                 </div>
@@ -1211,19 +1284,19 @@
                         <div class="card-body">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <div>
-                                    <span class="text-sm text-gray-500">Project:</span>
+                                    <span class="text-sm text-gray-500" data-i18n="project">Project:</span>
                                     <span id="workOrderProject" class="font-bold block"></span>
                                 </div>
                                 <div>
-                                    <span class="text-sm text-gray-500">Sales Order:</span>
+                                    <span class="text-sm text-gray-500" data-i18n="salesOrder">Sales Order:</span>
                                     <span id="workOrderSalesNumber" class="font-bold block"></span>
                                 </div>
                                 <div>
-                                    <span class="text-sm text-gray-500">Creation Date:</span>
+                                    <span class="text-sm text-gray-500" data-i18n="creationDate">Creation Date:</span>
                                     <span id="workOrderCreationDate" class="font-bold block"></span>
                                 </div>
                                 <div>
-                                    <span class="text-sm text-gray-500">Total Items:</span>
+                                    <span class="text-sm text-gray-500" data-i18n="totalItems">Total Items:</span>
                                     <span id="workOrderTotalItems" class="font-bold block"></span>
                                 </div>
                             </div>
@@ -1235,14 +1308,14 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Item Name</th>
-                                    <th>Section</th>
-                                    <th>Steel Grade</th>
-                                    <th>Length</th>
-                                    <th>Quantity</th>
-                                    <th>Weight/Piece</th>
-                                    <th>Total Weight</th>
-                                    <th>Operations</th>
+                                    <th data-i18n="itemName">Item Name</th>
+                                    <th data-i18n="section">Section</th>
+                                    <th data-i18n="steelGrade">Steel Grade</th>
+                                    <th data-i18n="length">Length</th>
+                                    <th data-i18n="quantity">Quantity</th>
+                                    <th data-i18n="weightPiece">Weight/Piece</th>
+                                    <th data-i18n="totalWeight">Total Weight</th>
+                                    <th data-i18n="operations">Operations</th>
                                 </tr>
                             </thead>
                             <tbody id="workOrderDetailsTableBody">
@@ -1263,14 +1336,14 @@
                     <div class="card">
                         <div class="card-header">
                             <h2 class="text-xl font-bold">
-                                <i class="fa-solid fa-industry mr-2 text-purple-600"></i> Daily Production
+                                <i class="fa-solid fa-industry mr-2 text-purple-600"></i> <span data-i18n="dailyProduction">Daily Production</span>
                             </h2>
                             <div class="flex gap-2">
                                 <button onclick="saveProductionPreferences()" class="btn btn-secondary btn-sm">
-                                    <i class="fa-solid fa-bookmark"></i> Save
+                                    <i class="fa-solid fa-bookmark"></i> <span data-i18n="save">Save</span>
                                 </button>
                                 <button onclick="clearProductionForm()" class="btn btn-outline btn-sm">
-                                    <i class="fa-solid fa-eraser"></i> Clear
+                                    <i class="fa-solid fa-eraser"></i> <span data-i18n="clear">Clear</span>
                                 </button>
                             </div>
                         </div>
@@ -1279,85 +1352,85 @@
                                 <div class="card-body p-3">
                                     <div class="flex items-center gap-2">
                                         <i class="fa-solid fa-info-circle text-blue-600"></i>
-                                        <p class="text-sm text-blue-800">Your selections will be saved automatically for easier entry of subsequent items</p>
+                                        <p class="text-sm text-blue-800" data-i18n="selectionsSaved">Your selections will be saved automatically for easier entry of subsequent items</p>
                                     </div>
                                 </div>
                             </div>
                             
                             <form id="productionForm" class="space-y-4">
                                 <div class="input-group">
-                                    <label class="input-label">Tower Type</label>
+                                    <label class="input-label" data-i18n="towerType">Tower Type</label>
                                     <select id="productionTowerType" class="input-field" onchange="onTowerTypeChange()">
-                                        <option value="" disabled selected>Select type...</option>
+                                        <option value="" disabled selected data-i18n="selectType">Select type...</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Model</label>
+                                    <label class="input-label" data-i18n="model">Model</label>
                                     <select id="productionModel" class="input-field" onchange="onModelChange()">
-                                        <option value="" disabled selected>Select model...</option>
+                                        <option value="" disabled selected data-i18n="selectModel">Select model...</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Work Order Number</label>
+                                    <label class="input-label" data-i18n="workOrderNumber">Work Order Number</label>
                                     <select id="productionWorkOrder" class="input-field" onchange="onWorkOrderChange()">
-                                        <option value="" disabled selected>Select work order...</option>
+                                        <option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Project Name</label>
+                                    <label class="input-label" data-i18n="projectName">Project Name</label>
                                     <select id="productionProject" class="input-field" disabled>
                                         <option value="" disabled selected>Will be filled automatically...</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Date</label>
+                                    <label class="input-label" data-i18n="date">Date</label>
                                     <input type="date" id="productionDate" class="input-field">
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Shift</label>
+                                    <label class="input-label" data-i18n="shift">Shift</label>
                                     <select id="productionShift" class="input-field" onchange="saveProductionPreferences()">
-                                        <option value="" disabled selected>Select shift...</option>
-                                        <option value="First Shift">First Shift</option>
-                                        <option value="Second Shift">Second Shift</option>
-                                        <option value="Third Shift">Third Shift</option>
+                                        <option value="" disabled selected data-i18n="selectShift">Select shift...</option>
+                                        <option value="First Shift" data-i18n="firstShift">First Shift</option>
+                                        <option value="Second Shift" data-i18n="secondShift">Second Shift</option>
+                                        <option value="Third Shift" data-i18n="thirdShift">Third Shift</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Machine Name</label>
+                                    <label class="input-label" data-i18n="machineName">Machine Name</label>
                                     <select id="productionMachine" class="input-field" onchange="onMachineChange()">
-                                        <option value="" disabled selected>Select machine...</option>
-                                        <!-- ماكينات الزوايا -->
+                                        <option value="" disabled selected data-i18n="selectMachine">Select machine...</option>
+                                        <!-- Angle Machines -->
                                         <option value="206">206</option>
                                         <option value="20.20">20.20</option>
                                         <option value="10.10">10.10</option>
-                                        <option value="Cropping">Cropping</option>
-                                        <option value="Manual Plasma">Manual Plasma</option>
-                                        <option value="Press">Press</option>
-                                        <option value="Drill">Drill</option>
-                                        <option value="Chamfering">Chamfering</option>
-                                        <!-- ماكينات الصاج -->
-                                        <option value="Shear">Shear</option>
+                                        <option value="Cropping" data-i18n="cropping">Cropping</option>
+                                        <option value="Manual Plasma" data-i18n="manualPlasma">Manual Plasma</option>
+                                        <option value="Press" data-i18n="press">Press</option>
+                                        <option value="Drill" data-i18n="drill">Drill</option>
+                                        <option value="Chamfering" data-i18n="chamfering">Chamfering</option>
+                                        <!-- Sheet Metal Machines -->
+                                        <option value="Shear" data-i18n="shear">Shear</option>
                                         <option value="83P">83P</option>
-                                        <option value="CNC Bending">CNC Bending</option>
-                                        <!-- التشطيب المشترك -->
-                                        <option value="Finishing">Finishing</option>
+                                        <option value="CNC Bending" data-i18n="cncBending">CNC Bending</option>
+                                        <!-- Finishing -->
+                                        <option value="Finishing" data-i18n="finishing">Finishing</option>
                                     </select>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Operator Name</label>
+                                    <label class="input-label" data-i18n="operatorName">Operator Name</label>
                                     <select id="productionOperatorSelect" class="input-field" onchange="saveProductionPreferences()">
-                                        <option value="" disabled selected>Select operator...</option>
+                                        <option value="" disabled selected data-i18n="selectOperator">Select operator...</option>
                                     </select>
                                     <div class="mt-2">
                                         <button onclick="showOperatorsManagement()" class="btn btn-outline btn-sm w-full">
-                                            <i class="fa-solid fa-users-gear"></i> Manage Operators
+                                            <i class="fa-solid fa-users-gear"></i> <span data-i18n="manageOperators">Manage Operators</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1365,36 +1438,36 @@
                                 <div id="availableItemsContainer" class="hidden">
                                     <div class="input-group">
                                         <div class="flex justify-between items-center mb-1">
-                                            <label class="input-label">Select Item for Production</label>
+                                            <label class="input-label" data-i18n="selectItemProduction">Select Item for Production</label>
                                             <span id="remainingQuantityInfo" class="text-xs text-gray-500"></span>
                                         </div>
                                         <select id="availableItemsSelect" class="input-field" onchange="updateQuantityField()">
-                                            <option value="" disabled selected>Select item...</option>
+                                            <option value="" disabled selected data-i18n="selectItem">Select item...</option>
                                         </select>
                                         <div id="itemDetails" class="mt-3 p-3 bg-blue-50 rounded-lg hidden">
                                             <div class="grid grid-cols-2 gap-3 text-sm">
                                                 <div>
-                                                    <span class="font-bold text-gray-600">Section:</span>
+                                                    <span class="font-bold text-gray-600" data-i18n="section">Section:</span>
                                                     <span id="selectedItemSection" class="ml-2 text-gray-800"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="font-bold text-gray-600">Operation:</span>
+                                                    <span class="font-bold text-gray-600" data-i18n="operation">Operation:</span>
                                                     <span id="selectedItemOperation" class="ml-2 text-gray-800"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="font-bold text-gray-600">Total Qty:</span>
+                                                    <span class="font-bold text-gray-600" data-i18n="totalQty">Total Qty:</span>
                                                     <span id="selectedItemTotal" class="ml-2 text-gray-800"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="font-bold text-gray-600">Completed:</span>
+                                                    <span class="font-bold text-gray-600" data-i18n="completed">Completed:</span>
                                                     <span id="selectedItemCompleted" class="ml-2 text-gray-800"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="font-bold text-gray-600">Remaining:</span>
+                                                    <span class="font-bold text-gray-600" data-i18n="remaining">Remaining:</span>
                                                     <span id="selectedItemRemaining" class="ml-2 text-gray-800"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="font-bold text-gray-600">Weight/Piece:</span>
+                                                    <span class="font-bold text-gray-600" data-i18n="weightPiece">Weight/Piece:</span>
                                                     <span id="selectedItemWeight" class="ml-2 text-gray-800"></span>
                                                 </div>
                                             </div>
@@ -1403,18 +1476,18 @@
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Quantity Produced</label>
+                                    <label class="input-label" data-i18n="quantityProduced">Quantity Produced</label>
                                     <input type="number" id="productionQuantity" min="1" value="1" class="input-field" onchange="validateQuantity()">
                                     <div id="quantityWarning" class="error-message hidden"></div>
                                 </div>
 
                                 <div class="input-group">
-                                    <label class="input-label">Notes</label>
-                                    <textarea id="productionNotes" rows="2" placeholder="Additional notes..." class="input-field"></textarea>
+                                    <label class="input-label" data-i18n="notesField">Notes</label>
+                                    <textarea id="productionNotes" rows="2" placeholder="Additional notes..." class="input-field" data-i18n-placeholder="notesField"></textarea>
                                 </div>
 
                                 <button type="button" onclick="recordProduction()" class="btn btn-primary w-full">
-                                    <i class="fa-solid fa-floppy-disk"></i> Record Production
+                                    <i class="fa-solid fa-floppy-disk"></i> <span data-i18n="recordProduction">Record Production</span>
                                 </button>
                             </form>
                         </div>
@@ -1423,16 +1496,15 @@
                     <!-- Production Stats -->
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="font-bold text-gray-700 mb-4">Production Statistics</h3>
+                            <h3 class="font-bold text-gray-700 mb-4" data-i18n="productionStatistics">Production Statistics</h3>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="text-center">
                                     <span id="totalProductionRecords" class="block text-2xl font-bold text-purple-600">0</span>
-                                    <span class="text-xs text-gray-500">Production Records</span>
+                                    <span class="text-xs text-gray-500" data-i18n="productionRecords">Production Records</span>
                                 </div>
                                 <div class="text-center">
                                     <span id="totalProducedItems" class="block text-2xl font-bold text-indigo-600">0</span>
-                                    <!-- تم تغيير النص هنا من Items Produced إلى Pieces Produced -->
-                                    <span class="text-xs text-gray-500">Pieces Produced</span>
+                                    <span class="text-xs text-gray-500" data-i18n="piecesProduced">Pieces Produced</span>
                                 </div>
                             </div>
                         </div>
@@ -1445,16 +1517,16 @@
                     <div class="card">
                         <div class="card-header">
                             <h2 class="text-xl font-bold">
-                                <i class="fa-solid fa-chart-line mr-2 text-purple-600"></i> Production Records
+                                <i class="fa-solid fa-chart-line mr-2 text-purple-600"></i> <span data-i18n="productionRecords">Production Records</span>
                             </h2>
                             <div class="relative">
-                                <input type="text" id="productionSearch" onkeyup="renderProductionList()" placeholder="Search production records..." class="input-field w-64">
+                                <input type="text" id="productionSearch" onkeyup="renderProductionList()" placeholder="Search production records..." class="input-field w-64" data-i18n-placeholder="searchProduction">
                                 <i class="fa-solid fa-search absolute right-3 top-3 text-gray-400"></i>
                             </div>
                         </div>
                         <div class="card-body">
                             <div id="productionContainer" class="space-y-4">
-                                <p class="text-center text-gray-500 py-10">No production records. Record daily production.</p>
+                                <p class="text-center text-gray-500 py-10" data-i18n="noProductionRecords">No production records. Record daily production.</p>
                             </div>
 
                             <!-- Production Detail View -->
@@ -1463,7 +1535,7 @@
                                     <div>
                                         <h3 class="text-xl font-bold">
                                             <i class="fa-solid fa-clipboard-check mr-2 text-purple-600"></i>
-                                            Production Record Details: <span id="productionTitle"></span>
+                                            <span data-i18n="productionRecordDetails">Production Record Details</span>: <span id="productionTitle"></span>
                                         </h3>
                                         <div class="flex gap-2 mt-2">
                                             <span id="productionType" class="badge badge-info"></span>
@@ -1473,13 +1545,13 @@
                                     </div>
                                     <div class="action-buttons">
                                         <button onclick="exportProductionToExcel()" class="btn btn-secondary btn-sm">
-                                            <i class="fa-solid fa-file-excel"></i> Excel
+                                            <i class="fa-solid fa-file-excel"></i> <span data-i18n="exportExcel">Excel</span>
                                         </button>
                                         <button onclick="exportProductionToPDF()" class="btn btn-danger btn-sm">
-                                            <i class="fa-solid fa-file-pdf"></i> PDF
+                                            <i class="fa-solid fa-file-pdf"></i> <span data-i18n="exportPDF">PDF</span>
                                         </button>
                                         <button onclick="hideProductionDetails()" class="btn btn-outline btn-sm">
-                                            <i class="fa-solid fa-times"></i> Close
+                                            <i class="fa-solid fa-times"></i> <span data-i18n="close">Close</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1488,23 +1560,23 @@
                                         <div class="card-body">
                                             <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                                                 <div>
-                                                    <span class="text-sm text-gray-500">Project:</span>
+                                                    <span class="text-sm text-gray-500" data-i18n="project">Project:</span>
                                                     <span id="productionProjectDetail" class="font-bold block"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="text-sm text-gray-500">Machine:</span>
+                                                    <span class="text-sm text-gray-500" data-i18n="machine">Machine:</span>
                                                     <span id="productionMachineDetail" class="font-bold block"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="text-sm text-gray-500">Quantity Produced:</span>
+                                                    <span class="text-sm text-gray-500" data-i18n="quantityProduced">Quantity Produced:</span>
                                                     <span id="productionQuantityDetail" class="font-bold block"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="text-sm text-gray-500">Operator:</span>
+                                                    <span class="text-sm text-gray-500" data-i18n="operator">Operator:</span>
                                                     <span id="productionOperatorDetail" class="font-bold block"></span>
                                                 </div>
                                                 <div>
-                                                    <span class="text-sm text-gray-500">Weight Produced:</span>
+                                                    <span class="text-sm text-gray-500" data-i18n="weightProduced">Weight Produced:</span>
                                                     <span id="productionWeightDetail" class="font-bold block"></span>
                                                 </div>
                                             </div>
@@ -1516,12 +1588,12 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Item Name</th>
-                                                    <th>Section</th>
-                                                    <th>Operation</th>
-                                                    <th>Status</th>
-                                                    <th>Quantity</th>
-                                                    <th>Weight Produced</th>
+                                                    <th data-i18n="itemName">Item Name</th>
+                                                    <th data-i18n="section">Section</th>
+                                                    <th data-i18n="operation">Operation</th>
+                                                    <th data-i18n="status">Status</th>
+                                                    <th data-i18n="quantity">Quantity</th>
+                                                    <th data-i18n="weightProduced">Weight Produced</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="productionDetailsTableBody">
@@ -1542,7 +1614,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-xl font-bold">
-                        <i class="fa-solid fa-chart-column mr-2 text-teal-600"></i> Reports
+                        <i class="fa-solid fa-chart-column mr-2 text-teal-600"></i> <span data-i18n="reports">Reports</span>
                     </h2>
                 </div>
                 <div class="card-body">
@@ -1551,20 +1623,20 @@
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="text-lg font-bold mb-4">
-                                    <i class="fa-solid fa-clipboard-list mr-2 text-blue-600"></i> Items Status Report
+                                    <i class="fa-solid fa-clipboard-list mr-2 text-blue-600"></i> <span data-i18n="itemsStatusReport">Items Status Report</span>
                                 </h3>
-                                <p class="text-gray-600 mb-4">Get detailed status of items in a specific work order</p>
+                                <p class="text-gray-600 mb-4" data-i18n="detailedStatus">Get detailed status of items in a specific work order</p>
                                 
                                 <div class="space-y-4">
                                     <div class="input-group">
-                                        <label class="input-label">Select Work Order</label>
+                                        <label class="input-label" data-i18n="selectWorkOrder">Select Work Order</label>
                                         <select id="reportWorkOrder" class="input-field">
-                                            <option value="" disabled selected>Select work order...</option>
+                                            <option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>
                                         </select>
                                     </div>
                                     
                                     <button onclick="generateItemsStatusReport()" class="btn btn-primary w-full">
-                                        <i class="fa-solid fa-file-export"></i> Generate Items Status Report
+                                        <i class="fa-solid fa-file-export"></i> <span data-i18n="generateItemsStatus">Generate Items Status Report</span>
                                     </button>
                                 </div>
                             </div>
@@ -1574,30 +1646,29 @@
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="text-lg font-bold mb-4">
-                                    <i class="fa-solid fa-magnifying-glass mr-2 text-purple-600"></i> Detailed Item Report
+                                    <i class="fa-solid fa-magnifying-glass mr-2 text-purple-600"></i> <span data-i18n="detailedItemReport">Detailed Item Report</span>
                                 </h3>
-                                <p class="text-gray-600 mb-4">Get detailed production record for a specific item</p>
+                                <p class="text-gray-600 mb-4" data-i18n="detailedProduction">Get detailed production record for a specific item</p>
                                 
                                 <div class="space-y-4">
                                     <div class="input-group">
-                                        <label class="input-label">Select Work Order</label>
+                                        <label class="input-label" data-i18n="selectWorkOrder">Select Work Order</label>
                                         <select id="detailReportWorkOrder" class="input-field" onchange="populateItemsForReport()">
-                                            <option value="" disabled selected>Select work order...</option>
+                                            <option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>
                                         </select>
                                     </div>
                                     
                                     <div id="itemSelectionContainer" class="hidden">
-                                        <!-- تم تغيير حقل البحث إلى قائمة منسدلة عادية -->
                                         <div class="input-group">
-                                            <label class="input-label">Select Item</label>
+                                            <label class="input-label" data-i18n="selectItem">Select Item</label>
                                             <select id="detailReportItem" class="input-field">
-                                                <option value="" disabled selected>Select item...</option>
+                                                <option value="" disabled selected data-i18n="selectItem">Select item...</option>
                                             </select>
                                         </div>
                                     </div>
                                     
                                     <button onclick="generateDetailedItemReport()" class="btn btn-primary w-full">
-                                        <i class="fa-solid fa-chart-line"></i> Generate Detailed Report
+                                        <i class="fa-solid fa-chart-line"></i> <span data-i18n="generateDetailed">Generate Detailed Report</span>
                                     </button>
                                 </div>
                             </div>
@@ -1608,35 +1679,35 @@
                     <div class="card mb-8">
                         <div class="card-header">
                             <h3 class="text-lg font-bold">
-                                <i class="fa-solid fa-calendar-day mr-2 text-teal-600"></i> Daily Production Report
+                                <i class="fa-solid fa-calendar-day mr-2 text-teal-600"></i> <span data-i18n="dailyProductionReport">Daily Production Report</span>
                             </h3>
                         </div>
                         <div class="card-body">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                                 <div class="input-group">
-                                    <label class="input-label">From Date</label>
+                                    <label class="input-label" data-i18n="fromDate">From Date</label>
                                     <input type="date" id="dailyReportFromDate" class="input-field">
                                 </div>
                                 <div class="input-group">
-                                    <label class="input-label">To Date</label>
+                                    <label class="input-label" data-i18n="toDate">To Date</label>
                                     <input type="date" id="dailyReportToDate" class="input-field">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                                 <div class="input-group">
-                                    <label class="input-label">Shift</label>
+                                    <label class="input-label" data-i18n="shift">Shift</label>
                                     <select id="dailyReportShift" class="input-field">
-                                        <option value="">All Shifts</option>
-                                        <option value="First Shift">First Shift</option>
-                                        <option value="Second Shift">Second Shift</option>
-                                        <option value="Third Shift">Third Shift</option>
+                                        <option value="" data-i18n="allShifts">All Shifts</option>
+                                        <option value="First Shift" data-i18n="firstShift">First Shift</option>
+                                        <option value="Second Shift" data-i18n="secondShift">Second Shift</option>
+                                        <option value="Third Shift" data-i18n="thirdShift">Third Shift</option>
                                     </select>
                                 </div>
                                 <div class="input-group">
-                                    <label class="input-label">Operation Phase</label>
+                                    <label class="input-label" data-i18n="operationPhase">Operation Phase</label>
                                     <select id="dailyReportPhase" class="input-field">
-                                        <option value="">All Phases</option>
+                                        <option value="" data-i18n="allPhases">All Phases</option>
                                         <option value="minimum">Minimum</option>
                                         <option value="crop">Cropping</option>
                                         <option value="cut">Cutting</option>
@@ -1648,35 +1719,75 @@
                                     </select>
                                 </div>
                                 <div class="input-group">
-                                    <label class="input-label">Machine</label>
+                                    <label class="input-label" data-i18n="machine">Machine</label>
                                     <select id="dailyReportMachine" class="input-field">
-                                        <option value="">All Machines</option>
+                                        <option value="" data-i18n="allMachines">All Machines</option>
                                         <option value="206">206</option>
                                         <option value="20.20">20.20</option>
                                         <option value="10.10">10.10</option>
-                                        <option value="Cropping">Cropping</option>
-                                        <option value="Manual Plasma">Manual Plasma</option>
-                                        <option value="Press">Press</option>
-                                        <option value="Drill">Drill</option>
-                                        <option value="Chamfering">Chamfering</option>
-                                        <option value="Finishing">Finishing</option>
-                                        <!-- ماكينات الصاج -->
-                                        <option value="Shear">Shear</option>
+                                        <option value="Cropping" data-i18n="cropping">Cropping</option>
+                                        <option value="Manual Plasma" data-i18n="manualPlasma">Manual Plasma</option>
+                                        <option value="Press" data-i18n="press">Press</option>
+                                        <option value="Drill" data-i18n="drill">Drill</option>
+                                        <option value="Chamfering" data-i18n="chamfering">Chamfering</option>
+                                        <option value="Finishing" data-i18n="finishing">Finishing</option>
+                                        <!-- Sheet Metal Machines -->
+                                        <option value="Shear" data-i18n="shear">Shear</option>
                                         <option value="83P">83P</option>
-                                        <option value="CNC Bending">CNC Bending</option>
+                                        <option value="CNC Bending" data-i18n="cncBending">CNC Bending</option>
                                     </select>
                                 </div>
                             </div>
                             
                             <div class="input-group">
-                                <label class="input-label">Work Order</label>
+                                <label class="input-label" data-i18n="workOrder">Work Order</label>
                                 <select id="dailyReportWorkOrder" class="input-field">
-                                    <option value="">All Work Orders</option>
+                                    <option value="" data-i18n="allWorkOrders">All Work Orders</option>
                                 </select>
                             </div>
                             
                             <button onclick="generateDailyProductionReport()" class="btn btn-primary w-full">
-                                <i class="fa-solid fa-chart-bar"></i> Generate Daily Production Report
+                                <i class="fa-solid fa-chart-bar"></i> <span data-i18n="generateDaily">Generate Daily Production Report</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Operation Status Report -->
+                    <div class="card mb-8">
+                        <div class="card-header">
+                            <h3 class="text-lg font-bold">
+                                <i class="fa-solid fa-cogs mr-2 text-indigo-600"></i> <span data-i18n="operationStatusReport">Operation Status Report</span>
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="input-group">
+                                    <label class="input-label" data-i18n="selectOperationPhase">Select Operation Phase</label>
+                                    <select id="operationPhase" class="input-field" onchange="populateWorkOrdersForOperation()">
+                                        <option value="" disabled selected data-i18n="selectOperation">Select operation...</option>
+                                        <option value="minimum">Minimum</option>
+                                        <option value="crop">Cropping</option>
+                                        <option value="cut">Cutting</option>
+                                        <option value="bend">Bending</option>
+                                        <option value="drill">Drilling</option>
+                                        <option value="chamfer">Chamfering</option>
+                                        <option value="finish">Finishing</option>
+                                        <option value="shear">Shearing</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="operationWorkOrderContainer" class="hidden">
+                                    <div class="input-group">
+                                        <label class="input-label" data-i18n="selectWorkOrder">Select Work Order</label>
+                                        <select id="operationWorkOrder" class="input-field">
+                                            <option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button onclick="generateOperationStatusReport()" class="btn btn-primary w-full mt-4">
+                                <i class="fa-solid fa-chart-pie"></i> <span data-i18n="generateOperationStatus">Generate Operation Status Report</span>
                             </button>
                         </div>
                     </div>
@@ -1685,7 +1796,7 @@
                     <div class="card mb-8">
                         <div class="card-header">
                             <h3 class="text-lg font-bold">
-                                <i class="fa-solid fa-database mr-2 text-orange-600"></i> Backup & Restore
+                                <i class="fa-solid fa-database mr-2 text-orange-600"></i> <span data-i18n="backupRestore">Backup & Restore</span>
                             </h3>
                         </div>
                         <div class="card-body">
@@ -1693,10 +1804,10 @@
                                 <div class="card backup-card">
                                     <div class="card-body text-center">
                                         <i class="fa-solid fa-download text-4xl text-blue-500 mb-4"></i>
-                                        <h4 class="font-bold text-lg mb-2">Export Backup</h4>
-                                        <p class="text-gray-600 mb-4 text-sm">Save all system data in a single file</p>
+                                        <h4 class="font-bold text-lg mb-2" data-i18n="exportBackup">Export Backup</h4>
+                                        <p class="text-gray-600 mb-4 text-sm" data-i18n="saveAllData">Save all system data in a single file</p>
                                         <button onclick="exportBackup()" class="btn btn-primary w-full">
-                                            <i class="fa-solid fa-file-export"></i> Export Data
+                                            <i class="fa-solid fa-file-export"></i> <span data-i18n="exportData">Export Data</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1704,16 +1815,16 @@
                                 <div class="card backup-card">
                                     <div class="card-body text-center">
                                         <i class="fa-solid fa-upload text-4xl text-green-500 mb-4"></i>
-                                        <h4 class="font-bold text-lg mb-2">Restore Backup</h4>
-                                        <p class="text-gray-600 mb-4 text-sm">Restore data from a backup file</p>
+                                        <h4 class="font-bold text-lg mb-2" data-i18n="restoreBackup">Restore Backup</h4>
+                                        <p class="text-gray-600 mb-4 text-sm" data-i18n="restoreData">Restore data from a backup file</p>
                                         <div class="text-center">
                                             <div class="backup-card p-4 rounded-lg mb-4 cursor-pointer" onclick="document.getElementById('restoreFile').click()">
                                                 <i class="fa-solid fa-cloud-arrow-up text-2xl text-gray-400 mb-2"></i>
-                                                <p class="text-sm font-medium text-gray-700">Click to upload backup file</p>
+                                                <p class="text-sm font-medium text-gray-700" data-i18n="uploadBackupFile">Click to upload backup file</p>
                                                 <input type="file" id="restoreFile" accept=".json" class="hidden" onchange="handleRestoreFile(event)">
                                             </div>
                                             <button onclick="restoreBackup()" class="btn btn-secondary w-full" id="restoreBtn" disabled>
-                                                <i class="fa-solid fa-file-import"></i> Restore Data
+                                                <i class="fa-solid fa-file-import"></i> <span data-i18n="restoreDataBtn">Restore Data</span>
                                             </button>
                                         </div>
                                     </div>
@@ -1729,16 +1840,16 @@
                                 <h3 class="text-lg font-bold" id="reportTitle"></h3>
                                 <div class="action-buttons">
                                     <button onclick="exportReportToExcel()" class="btn btn-secondary btn-sm">
-                                        <i class="fa-solid fa-file-excel"></i> Excel
+                                        <i class="fa-solid fa-file-excel"></i> <span data-i18n="exportExcel">Excel</span>
                                     </button>
                                     <button onclick="exportReportToPDF()" class="btn btn-danger btn-sm">
-                                        <i class="fa-solid fa-file-pdf"></i> PDF
+                                        <i class="fa-solid fa-file-pdf"></i> <span data-i18n="exportPDF">PDF</span>
                                     </button>
                                     <button onclick="printReport()" class="btn btn-warning btn-sm">
-                                        <i class="fa-solid fa-print"></i> Print
+                                        <i class="fa-solid fa-print"></i> <span data-i18n="print">Print</span>
                                     </button>
                                     <button onclick="hideReportResults()" class="btn btn-outline btn-sm">
-                                        <i class="fa-solid fa-times"></i> Close
+                                        <i class="fa-solid fa-times"></i> <span data-i18n="close">Close</span>
                                     </button>
                                 </div>
                             </div>
@@ -1769,7 +1880,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="text-lg font-bold">
-                    <i class="fa-solid fa-database mr-2"></i> Backup Management
+                    <i class="fa-solid fa-database mr-2"></i> <span data-i18n="backupRestore">Backup Management</span>
                 </h3>
                 <button onclick="hideModal('backupModal')" class="btn btn-outline btn-sm">
                     <i class="fa-solid fa-times"></i>
@@ -1778,25 +1889,25 @@
             <div class="modal-body">
                 <div class="space-y-4">
                     <div class="input-group">
-                        <label class="input-label">Create Backup</label>
-                        <p class="text-sm text-gray-600 mb-3">Save all system data to a JSON file</p>
+                        <label class="input-label" data-i18n="createBackup">Create Backup</label>
+                        <p class="text-sm text-gray-600 mb-3" data-i18n="saveAllData">Save all system data to a JSON file</p>
                         <button onclick="createBackup()" class="btn btn-primary w-full">
-                            <i class="fa-solid fa-download"></i> Create Backup
+                            <i class="fa-solid fa-download"></i> <span data-i18n="createBackup">Create Backup</span>
                         </button>
                     </div>
                     
                     <div class="input-group">
-                        <label class="input-label">Restore Backup</label>
-                        <p class="text-sm text-gray-600 mb-3">Restore data from a backup file</p>
+                        <label class="input-label" data-i18n="restoreBackup">Restore Backup</label>
+                        <p class="text-sm text-gray-600 mb-3" data-i18n="restoreData">Restore data from a backup file</p>
                         <input type="file" id="backupFile" accept=".json" class="input-field" onchange="handleBackupFileChange()">
                         <button onclick="restoreFromBackup()" class="btn btn-secondary w-full mt-2" id="restoreBackupBtn" disabled>
-                            <i class="fa-solid fa-upload"></i> Restore Backup
+                            <i class="fa-solid fa-upload"></i> <span data-i18n="restoreBackup">Restore Backup</span>
                         </button>
                     </div>
                     
                     <div class="input-group">
-                        <label class="input-label">Backup Schedule</label>
-                        <p class="text-sm text-gray-600 mb-3">Set automatic backup timing</p>
+                        <label class="input-label" data-i18n="backupSchedule">Backup Schedule</label>
+                        <p class="text-sm text-gray-600 mb-3" data-i18n="setAutomaticBackup">Set automatic backup timing</p>
                         <select id="backupSchedule" class="input-field">
                             <option value="daily">Daily</option>
                             <option value="weekly">Weekly</option>
@@ -1804,13 +1915,13 @@
                             <option value="none">None</option>
                         </select>
                         <button onclick="setBackupSchedule()" class="btn btn-outline w-full mt-2">
-                            <i class="fa-solid fa-calendar-check"></i> Save Schedule
+                            <i class="fa-solid fa-calendar-check"></i> <span data-i18n="saveSchedule">Save Schedule</span>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="hideModal('backupModal')" class="btn btn-outline">Close</button>
+                <button onclick="hideModal('backupModal')" class="btn btn-outline" data-i18n="close">Close</button>
             </div>
         </div>
     </div>
@@ -1820,7 +1931,7 @@
         <div class="modal-content" style="background: transparent; box-shadow: none;">
             <div class="text-center">
                 <div class="spinner mx-auto mb-4"></div>
-                <p class="text-white font-medium" id="loadingText">Processing...</p>
+                <p class="text-white font-medium" id="loadingText" data-i18n="processing">Processing...</p>
             </div>
         </div>
     </div>
@@ -1868,15 +1979,472 @@
             date: new Date().toISOString().split('T')[0]
         };
 
+        // ============= BILINGUAL SUPPORT =============
+        const translations = {
+            en: {
+                // Header
+                appTitle: "Tower Manufacturing Management System",
+                appSubtitle: "66KV - 220KV - 500KV - Telecom",
+                manageOperators: "Manage Operators",
+                backup: "Backup",
+                clearDatabase: "Clear Database",
+                
+                // Tabs
+                dashboard: "Dashboard",
+                database: "Database",
+                workOrders: "Work Orders",
+                dailyProduction: "Daily Production",
+                reports: "Reports",
+                
+                // Dashboard
+                productionDashboard: "Production Dashboard",
+                refresh: "Refresh",
+                activeWorkOrders: "Active Work Orders",
+                itemsInProduction: "Items in Production",
+                completedToday: "Completed Today",
+                pendingOperations: "Pending Operations",
+                activeWorkOrdersProgress: "Active Work Orders Progress",
+                recentProduction: "Recent Production",
+                
+                // Models
+                modelsDatabase: "Models Database",
+                towerType: "Tower Type",
+                selectType: "Select type...",
+                modelName: "Model Name",
+                uploadExcelFile: "Upload Excel File",
+                clickToUpload: "Click to upload or drag & drop",
+                fileMustContain: "File must contain required columns",
+                processSaveData: "Process & Save Data",
+                importantInformation: "Important Information",
+                excelMustContain: "Excel file must contain these columns",
+                itemNameSection: "Item Name, Section, Steel Grade",
+                operations5to7: "Operations (5 to 7 operations)",
+                operationsProcessed: "Operations processed automatically",
+                statistics: "Statistics",
+                models: "Models",
+                items: "Items",
+                savedModels: "Saved Models",
+                searchModel: "Search model...",
+                noSavedModels: "No saved models. Upload your first Excel file.",
+                modelDetails: "Model Details",
+                close: "Close",
+                exportPDF: "Export PDF",
+                
+                // Work Orders
+                createNewWorkOrder: "Create New Work Order",
+                workOrderName: "Work Order Name",
+                projectName: "Project Name",
+                salesOrderNumber: "Sales Order Number",
+                workOrderTowerType: "Tower Type",
+                uploadWorkOrderFile: "Upload Work Order File",
+                createWorkOrder: "Create Work Order",
+                notes: "Notes",
+                selectExistingModel: "Select existing model from database",
+                operationsImported: "Operations will be imported from selected model",
+                woFileMustContain: "Work order file must contain quantities & weights",
+                productionStatusUpdated: "Production status updated automatically",
+                workOrdersStatistics: "Work Orders Statistics",
+                workOrders: "Work Orders",
+                searchWorkOrders: "Search work orders...",
+                noWorkOrders: "No work orders. Create your first work order.",
+                exportExcel: "Excel",
+                generateReport: "Report",
+                workOrderDetails: "Work Order Details",
+                
+                // Production
+                dailyProduction: "Daily Production",
+                save: "Save",
+                clear: "Clear",
+                selectionsSaved: "Your selections will be saved automatically for easier entry of subsequent items",
+                shift: "Shift",
+                selectShift: "Select shift...",
+                firstShift: "First Shift",
+                secondShift: "Second Shift",
+                thirdShift: "Third Shift",
+                machineName: "Machine Name",
+                selectMachine: "Select machine...",
+                operatorName: "Operator Name",
+                selectOperator: "Select operator...",
+                selectItemProduction: "Select Item for Production",
+                selectItem: "Select item...",
+                section: "Section",
+                operation: "Operation",
+                totalQty: "Total Qty",
+                completed: "Completed",
+                remaining: "Remaining",
+                weightPiece: "Weight/Piece",
+                quantityProduced: "Quantity Produced",
+                notesField: "Additional notes...",
+                recordProduction: "Record Production",
+                productionStatistics: "Production Statistics",
+                productionRecords: "Production Records",
+                piecesProduced: "Pieces Produced",
+                searchProduction: "Search production records...",
+                noProductionRecords: "No production records. Record daily production.",
+                productionRecordDetails: "Production Record Details",
+                
+                // Reports
+                itemsStatusReport: "Items Status Report",
+                detailedStatus: "Get detailed status of items in a specific work order",
+                selectWorkOrder: "Select Work Order",
+                generateItemsStatus: "Generate Items Status Report",
+                detailedItemReport: "Detailed Item Report",
+                detailedProduction: "Get detailed production record for a specific item",
+                generateDetailed: "Generate Detailed Report",
+                dailyProductionReport: "Daily Production Report",
+                fromDate: "From Date",
+                toDate: "To Date",
+                allShifts: "All Shifts",
+                operationPhase: "Operation Phase",
+                allPhases: "All Phases",
+                allMachines: "All Machines",
+                generateDaily: "Generate Daily Production Report",
+                backupRestore: "Backup & Restore",
+                exportBackup: "Export Backup",
+                saveAllData: "Save all system data in a single file",
+                exportData: "Export Data",
+                restoreBackup: "Restore Backup",
+                restoreData: "Restore data from a backup file",
+                uploadBackupFile: "Click to upload backup file",
+                restoreDataBtn: "Restore Data",
+                
+                // Operation Status Report
+                operationStatusReport: "Operation Status Report",
+                operationStatusDesc: "Get the status of a specific operation in work orders",
+                selectOperationPhase: "Select Operation Phase",
+                selectOperation: "Select operation...",
+                generateOperationStatus: "Generate Operation Status Report",
+                
+                // Buttons
+                print: "Print",
+                
+                // Messages
+                welcome: "Welcome to Tower Manufacturing Management System!",
+                backupCreated: "Backup created successfully",
+                dataRestored: "Data restored successfully",
+                operatorsSaved: "Operators saved successfully",
+                modelExportedPDF: "Model exported to PDF",
+                woExportedPDF: "Work order exported to PDF",
+                productionExportedPDF: "Production record exported to PDF",
+                reportExportedPDF: "Report exported to PDF",
+                preferencesSaved: "Preferences saved",
+                fileLoaded: "File loaded successfully",
+                woFileLoaded: "Work order file loaded",
+                modelSaved: "Model data saved successfully",
+                woProcessed: "Work order processed successfully",
+                productionRecorded: "Production recorded successfully",
+                dashboardRefreshed: "Dashboard refreshed",
+                fieldsCleared: "Fields cleared",
+                selectWOOp: "Please select work order and operation",
+                selectWO: "Please select work order",
+                selectWODate: "Please select date range",
+                
+                // Status
+                inProgress: "In Progress",
+                completedStatus: "Completed",
+                pending: "Pending",
+                
+                // Machines
+                cropping: "Cropping",
+                manualPlasma: "Manual Plasma",
+                press: "Press",
+                drill: "Drill",
+                chamfering: "Chamfering",
+                shear: "Shear",
+                cncBending: "CNC Bending",
+                finishing: "Finishing",
+                
+                // Other
+                length: "Length",
+                quantity: "Quantity",
+                totalWeight: "Total Weight",
+                weightProduced: "Weight Produced",
+                creationDate: "Creation Date",
+                salesOrder: "Sales Order",
+                project: "Project",
+                machine: "Machine",
+                operator: "Operator",
+                allWorkOrders: "All Work Orders",
+                processing: "Processing...",
+                backupSchedule: "Backup Schedule",
+                setAutomaticBackup: "Set automatic backup timing",
+                saveSchedule: "Save Schedule",
+                backupManagement: "Backup Management"
+            },
+            
+            ar: {
+                // Header
+                appTitle: "نظام إدارة تصنيع الأبراج",
+                appSubtitle: "66KV - 220KV - 500KV - الاتصالات",
+                manageOperators: "إدارة العاملين",
+                backup: "نسخ احتياطي",
+                clearDatabase: "مسح قاعدة البيانات",
+                
+                // Tabs
+                dashboard: "لوحة التحكم",
+                database: "قاعدة البيانات",
+                workOrders: "أوامر العمل",
+                dailyProduction: "الإنتاج اليومي",
+                reports: "التقارير",
+                
+                // Dashboard
+                productionDashboard: "لوحة الإنتاج",
+                refresh: "تحديث",
+                activeWorkOrders: "أوامر العمل النشطة",
+                itemsInProduction: "البنود قيد الإنتاج",
+                completedToday: "المكتمل اليوم",
+                pendingOperations: "العمليات المعلقة",
+                activeWorkOrdersProgress: "تقدم أوامر العمل النشطة",
+                recentProduction: "الإنتاج الحديث",
+                
+                // Models
+                modelsDatabase: "قاعدة بيانات النماذج",
+                towerType: "نوع البرج",
+                selectType: "اختر النوع...",
+                modelName: "اسم النموذج",
+                uploadExcelFile: "رفع ملف Excel",
+                clickToUpload: "انقر للرفع أو اسحب وأفلت",
+                fileMustContain: "يجب أن يحتوي الملف على الأعمدة المطلوبة",
+                processSaveData: "معالجة وحفظ البيانات",
+                importantInformation: "معلومات مهمة",
+                excelMustContain: "يجب أن يحتوي ملف Excel على هذه الأعمدة",
+                itemNameSection: "اسم البند، القطاع، درجة الصلب",
+                operations5to7: "العمليات (5 إلى 7 عمليات)",
+                operationsProcessed: "معالجة العمليات تلقائياً",
+                statistics: "إحصائيات",
+                models: "نماذج",
+                items: "بنود",
+                savedModels: "النماذج المحفوظة",
+                searchModel: "بحث في النماذج...",
+                noSavedModels: "لا توجد نماذج محفوظة. ارفع أول ملف Excel.",
+                modelDetails: "تفاصيل النموذج",
+                close: "إغلاق",
+                exportPDF: "تصدير PDF",
+                
+                // Work Orders
+                createNewWorkOrder: "إنشاء أمر عمل جديد",
+                workOrderName: "اسم أمر العمل",
+                projectName: "اسم المشروع",
+                salesOrderNumber: "رقم أمر المبيعات",
+                workOrderTowerType: "نوع البرج",
+                uploadWorkOrderFile: "رفع ملف أمر العمل",
+                createWorkOrder: "إنشاء أمر العمل",
+                notes: "ملاحظات",
+                selectExistingModel: "اختر نموذجاً من قاعدة البيانات",
+                operationsImported: "سيتم استيراد العمليات من النموذج المحدد",
+                woFileMustContain: "يجب أن يحتوي ملف أمر العمل على الكميات والأوزان",
+                productionStatusUpdated: "يتم تحديث حالة الإنتاج تلقائياً",
+                workOrdersStatistics: "إحصائيات أوامر العمل",
+                workOrders: "أوامر العمل",
+                searchWorkOrders: "بحث في أوامر العمل...",
+                noWorkOrders: "لا توجد أوامر عمل. أنشئ أول أمر عمل.",
+                exportExcel: "Excel",
+                generateReport: "تقرير",
+                workOrderDetails: "تفاصيل أمر العمل",
+                
+                // Production
+                dailyProduction: "الإنتاج اليومي",
+                save: "حفظ",
+                clear: "مسح",
+                selectionsSaved: "سيتم حفظ اختياراتك تلقائياً لتسهيل إدخال البنود التالية",
+                shift: "الوردية",
+                selectShift: "اختر الوردية...",
+                firstShift: "الوردية الأولى",
+                secondShift: "الوردية الثانية",
+                thirdShift: "الوردية الثالثة",
+                machineName: "اسم الماكينة",
+                selectMachine: "اختر الماكينة...",
+                operatorName: "اسم العامل",
+                selectOperator: "اختر العامل...",
+                selectItemProduction: "اختر البند للإنتاج",
+                selectItem: "اختر البند...",
+                section: "القطاع",
+                operation: "العملية",
+                totalQty: "الكمية الكلية",
+                completed: "المكتمل",
+                remaining: "المتبقي",
+                weightPiece: "الوزن/قطعة",
+                quantityProduced: "الكمية المنتجة",
+                notesField: "ملاحظات إضافية...",
+                recordProduction: "تسجيل الإنتاج",
+                productionStatistics: "إحصائيات الإنتاج",
+                productionRecords: "سجلات الإنتاج",
+                piecesProduced: "القطع المنتجة",
+                searchProduction: "بحث في سجلات الإنتاج...",
+                noProductionRecords: "لا توجد سجلات إنتاج. سجل الإنتاج اليومي.",
+                productionRecordDetails: "تفاصيل سجل الإنتاج",
+                
+                // Reports
+                itemsStatusReport: "تقرير حالة البنود",
+                detailedStatus: "الحصول على حالة مفصلة للبنود في أمر عمل محدد",
+                selectWorkOrder: "اختر أمر العمل",
+                generateItemsStatus: "إنشاء تقرير حالة البنود",
+                detailedItemReport: "تقرير مفصل للبند",
+                detailedProduction: "الحصول على سجل إنتاج مفصل لبند محدد",
+                generateDetailed: "إنشاء تقرير مفصل",
+                dailyProductionReport: "تقرير الإنتاج اليومي",
+                fromDate: "من تاريخ",
+                toDate: "إلى تاريخ",
+                allShifts: "جميع الورديات",
+                operationPhase: "مرحلة العملية",
+                allPhases: "جميع المراحل",
+                allMachines: "جميع الماكينات",
+                generateDaily: "إنشاء تقرير الإنتاج اليومي",
+                backupRestore: "النسخ الاحتياطي والاستعادة",
+                exportBackup: "تصدير النسخ الاحتياطي",
+                saveAllData: "حفظ جميع بيانات النظام في ملف واحد",
+                exportData: "تصدير البيانات",
+                restoreBackup: "استعادة النسخ الاحتياطي",
+                restoreData: "استعادة البيانات من ملف نسخ احتياطي",
+                uploadBackupFile: "انقر لرفع ملف النسخ الاحتياطي",
+                restoreDataBtn: "استعادة البيانات",
+                
+                // Operation Status Report
+                operationStatusReport: "تقرير حالة العملية",
+                operationStatusDesc: "الحصول على حالة عملية محددة في أوامر العمل",
+                selectOperationPhase: "اختر مرحلة العملية",
+                selectOperation: "اختر العملية...",
+                generateOperationStatus: "إنشاء تقرير حالة العملية",
+                
+                // Buttons
+                print: "طباعة",
+                
+                // Messages
+                welcome: "مرحباً بكم في نظام إدارة تصنيع الأبراج!",
+                backupCreated: "تم إنشاء النسخ الاحتياطي بنجاح",
+                dataRestored: "تم استعادة البيانات بنجاح",
+                operatorsSaved: "تم حفظ العاملين بنجاح",
+                modelExportedPDF: "تم تصدير النموذج إلى PDF",
+                woExportedPDF: "تم تصدير أمر العمل إلى PDF",
+                productionExportedPDF: "تم تصدير سجل الإنتاج إلى PDF",
+                reportExportedPDF: "تم تصدير التقرير إلى PDF",
+                preferencesSaved: "تم حفظ التفضيلات",
+                fileLoaded: "تم تحميل الملف بنجاح",
+                woFileLoaded: "تم تحميل ملف أمر العمل",
+                modelSaved: "تم حفظ بيانات النموذج بنجاح",
+                woProcessed: "تم معالجة أمر العمل بنجاح",
+                productionRecorded: "تم تسجيل الإنتاج بنجاح",
+                dashboardRefreshed: "تم تحديث لوحة التحكم",
+                fieldsCleared: "تم مسح الحقول",
+                selectWOOp: "يرجى اختيار أمر العمل والعملية",
+                selectWO: "يرجى اختيار أمر العمل",
+                selectWODate: "يرجى اختيار نطاق التاريخ",
+                
+                // Status
+                inProgress: "قيد التنفيذ",
+                completedStatus: "مكتمل",
+                pending: "معلق",
+                
+                // Machines
+                cropping: "قص",
+                manualPlasma: "بلازما يدوي",
+                press: "مكبس",
+                drill: "مثقاب",
+                chamfering: "حشو",
+                shear: "قص الصاج",
+                cncBending: "ثني CNC",
+                finishing: "تشطيب",
+                
+                // Other
+                length: "الطول",
+                quantity: "الكمية",
+                totalWeight: "الوزن الكلي",
+                weightProduced: "الوزن المنتج",
+                creationDate: "تاريخ الإنشاء",
+                salesOrder: "أمر المبيعات",
+                project: "المشروع",
+                machine: "الماكينة",
+                operator: "العامل",
+                allWorkOrders: "جميع أوامر العمل",
+                processing: "جاري المعالجة...",
+                backupSchedule: "جدول النسخ الاحتياطي",
+                setAutomaticBackup: "تعيين توقيت النسخ الاحتياطي التلقائي",
+                saveSchedule: "حفظ الجدول",
+                backupManagement: "إدارة النسخ الاحتياطي"
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('appLanguage') || 'en';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('appLanguage', lang);
+            applyTranslations();
+            updateRTL(lang);
+            updateLanguageButtons();
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLanguage];
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (t[key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = t[key];
+                    } else {
+                        element.textContent = t[key];
+                    }
+                }
+            });
+            
+            // Update placeholder attributes
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (t[key]) {
+                    element.placeholder = t[key];
+                }
+            });
+        }
+
+        function updateRTL(lang) {
+            if (lang === 'ar') {
+                document.documentElement.dir = 'rtl';
+                document.body.classList.remove('ltr');
+                document.body.classList.add('rtl');
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.body.classList.remove('rtl');
+                document.body.classList.add('ltr');
+            }
+        }
+
+        function updateLanguageButtons() {
+            const btnEn = document.getElementById('btnEn');
+            const btnAr = document.getElementById('btnAr');
+            
+            if (btnEn) btnEn.className = btnEn.className.replace('active', '').trim();
+            if (btnAr) btnAr.className = btnAr.className.replace('active', '').trim();
+            
+            if (currentLanguage === 'en') {
+                btnEn.className += ' active';
+                btnEn.classList.remove('btn-outline');
+                btnEn.classList.add('btn-primary');
+                btnAr.classList.remove('btn-primary');
+                btnAr.classList.add('btn-outline');
+            } else {
+                btnAr.className += ' active';
+                btnAr.classList.remove('btn-outline');
+                btnAr.classList.add('btn-primary');
+                btnEn.classList.remove('btn-primary');
+                btnEn.classList.add('btn-outline');
+            }
+        }
+
         // ============= INITIALIZATION =============
         document.addEventListener('DOMContentLoaded', () => {
             initializeApp();
             setBackupScheduleInterval();
             setupScrollToTop();
-            // تم إزالة setupSearchableDropdown لأننا لم نعد بحاجة إليه
         });
 
         function initializeApp() {
+            // Initialize language system
+            updateLanguageButtons();
+            applyTranslations();
+            updateRTL(currentLanguage);
+            
             updateStats();
             renderModelsList();
             renderWorkOrdersList();
@@ -1899,7 +2467,7 @@
             checkScheduledBackup();
             
             // Show welcome message
-            showToast('Welcome to Tower Manufacturing Management System!', 'info');
+            showToast(translations[currentLanguage].welcome, 'info');
         }
 
         function setupScrollToTop() {
@@ -1928,7 +2496,7 @@
 
         function createBackup() {
             try {
-                showLoading('Creating backup...');
+                showLoading(translations[currentLanguage].processing);
                 
                 const backupData = {
                     version: appConfig.version,
@@ -1959,7 +2527,7 @@
                 localStorage.setItem('lastBackup', appConfig.lastBackup);
 
                 hideLoading();
-                showToast('Backup created successfully', 'success');
+                showToast(translations[currentLanguage].backupCreated, 'success');
 
             } catch (error) {
                 hideLoading();
@@ -1990,7 +2558,7 @@
 
             reader.onload = function(e) {
                 try {
-                    showLoading('Restoring data...');
+                    showLoading(translations[currentLanguage].processing);
                     
                     const backupData = JSON.parse(e.target.result);
                     
@@ -2027,7 +2595,7 @@
                     updateOperatorsDropdown();
 
                     hideLoading();
-                    showToast('Data restored successfully', 'success');
+                    showToast(translations[currentLanguage].dataRestored, 'success');
                     hideModal('backupModal');
 
                 } catch (error) {
@@ -2044,7 +2612,7 @@
             const schedule = document.getElementById('backupSchedule').value;
             appConfig.backupSchedule = schedule;
             localStorage.setItem('backupSchedule', schedule);
-            showToast('Backup schedule saved', 'success');
+            showToast(translations[currentLanguage].saveSchedule, 'success');
         }
 
         function checkScheduledBackup() {
@@ -2129,7 +2697,7 @@
                 populateDailyReportWorkOrders();
                 updateOperatorsDropdown();
                 
-                showToast('Data restored successfully', 'success');
+                showToast(translations[currentLanguage].dataRestored, 'success');
             }
         }
 
@@ -2141,7 +2709,7 @@
                 <div class="modal-content" style="max-width: 600px;">
                     <div class="modal-header">
                         <h3 class="text-lg font-bold">
-                            <i class="fa-solid fa-users mr-2"></i> Machine Operators Management
+                            <i class="fa-solid fa-users mr-2"></i> <span data-i18n="manageOperators">Machine Operators Management</span>
                         </h3>
                         <button onclick="this.parentElement.parentElement.parentElement.remove()" class="btn btn-outline btn-sm">
                             <i class="fa-solid fa-times"></i>
@@ -2150,22 +2718,22 @@
                     <div class="modal-body">
                         <div class="space-y-4">
                             <div class="input-group">
-                                <label class="input-label">Select Machine</label>
+                                <label class="input-label" data-i18n="selectMachine">Select Machine</label>
                                 <select id="operatorMachineSelect" class="input-field" onchange="loadOperatorsForMachine()">
-                                    <option value="" disabled selected>Select machine...</option>
+                                    <option value="" disabled selected data-i18n="selectMachine">Select machine...</option>
                                     <option value="206">206</option>
                                     <option value="20.20">20.20</option>
                                     <option value="10.10">10.10</option>
-                                    <option value="Cropping">Cropping</option>
-                                    <option value="Manual Plasma">Manual Plasma</option>
-                                    <option value="Press">Press</option>
-                                    <option value="Drill">Drill</option>
-                                    <option value="Chamfering">Chamfering</option>
-                                    <option value="Finishing">Finishing</option>
-                                    <!-- ماكينات الصاج -->
-                                    <option value="Shear">Shear</option>
+                                    <option value="Cropping" data-i18n="cropping">Cropping</option>
+                                    <option value="Manual Plasma" data-i18n="manualPlasma">Manual Plasma</option>
+                                    <option value="Press" data-i18n="press">Press</option>
+                                    <option value="Drill" data-i18n="drill">Drill</option>
+                                    <option value="Chamfering" data-i18n="chamfering">Chamfering</option>
+                                    <option value="Finishing" data-i18n="finishing">Finishing</option>
+                                    <!-- Sheet Metal Machines -->
+                                    <option value="Shear" data-i18n="shear">Shear</option>
                                     <option value="83P">83P</option>
-                                    <option value="CNC Bending">CNC Bending</option>
+                                    <option value="CNC Bending" data-i18n="cncBending">CNC Bending</option>
                                 </select>
                             </div>
                             
@@ -2173,20 +2741,26 @@
                                 <div class="flex justify-between items-center mb-2">
                                     <label class="input-label">Operators for this machine</label>
                                     <button onclick="addOperatorField()" class="btn btn-primary btn-sm">
-                                        <i class="fa-solid fa-plus"></i> Add Operator
+                                        <i class="fa-solid fa-plus"></i> <span data-i18n="addOperator">Add Operator</span>
                                     </button>
                                 </div>
                                 <div id="operatorsList" class="space-y-2">
                                     <!-- Dynamic operators list -->
                                 </div>
                                 <button onclick="saveOperators()" class="btn btn-secondary w-full mt-4">
-                                    <i class="fa-solid fa-save"></i> Save Operators
+                                    <i class="fa-solid fa-save"></i> <span data-i18n="saveOperators">Save Operators</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
+            
+            // Apply translations to modal
+            setTimeout(() => {
+                applyTranslations();
+            }, 10);
+            
             document.body.appendChild(modal);
         }
 
@@ -2254,7 +2828,7 @@
             
             machineOperatorsDB[machine] = operators;
             localStorage.setItem('machineOperatorsDB', JSON.stringify(machineOperatorsDB));
-            showToast('Operators saved successfully', 'success');
+            showToast(translations[currentLanguage].operatorsSaved, 'success');
             
             // Update operators dropdown in production form
             updateOperatorsDropdown();
@@ -2270,14 +2844,22 @@
             }
             
             const operators = machineOperatorsDB[machine] || [];
-            operatorSelect.innerHTML = '<option value="" disabled selected>Select operator...</option>';
+            operatorSelect.innerHTML = '<option value="" disabled selected data-i18n="selectOperator">Select operator...</option>';
             
-            operators.forEach(operator => {
+            if (operators.length === 0) {
                 const option = document.createElement('option');
-                option.value = operator;
-                option.textContent = operator;
+                option.value = "";
+                option.textContent = "No operators assigned to this machine";
+                option.disabled = true;
                 operatorSelect.appendChild(option);
-            });
+            } else {
+                operators.forEach(operator => {
+                    const option = document.createElement('option');
+                    option.value = operator;
+                    option.textContent = operator;
+                    operatorSelect.appendChild(option);
+                });
+            }
             
             // If there's a saved operator in preferences, select it
             if (productionPreferences.operator && operators.includes(productionPreferences.operator)) {
@@ -2323,7 +2905,7 @@
             
             // Save PDF
             doc.save(`Model-${model.model}.pdf`);
-            showToast('Model exported to PDF', 'success');
+            showToast(translations[currentLanguage].modelExportedPDF, 'success');
         }
 
         function exportWorkOrderToPDF() {
@@ -2389,7 +2971,7 @@
             }
             
             doc.save(`Work-Order-${currentWorkOrder.workOrderName}.pdf`);
-            showToast('Work order exported to PDF', 'success');
+            showToast(translations[currentLanguage].woExportedPDF, 'success');
         }
 
         function exportProductionToPDF() {
@@ -2424,7 +3006,7 @@
             doc.text(`Record ID: ${currentProduction.id}`, 105, 120, null, null, 'center');
             
             doc.save(`Production-${currentProduction.itemName}-${currentProduction.date}.pdf`);
-            showToast('Production record exported to PDF', 'success');
+            showToast(translations[currentLanguage].productionExportedPDF, 'success');
         }
 
         function exportReportToPDF() {
@@ -2435,22 +3017,61 @@
             );
 
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF('landscape');
             
-            doc.setFontSize(16);
-            doc.text(title, 105, 20, null, null, 'center');
+            // Add header with logo and title
+            doc.setFontSize(18);
+            doc.setTextColor(30, 64, 175);
+            doc.text('Tower Manufacturing Management System', 148, 20, null, null, 'center');
             
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            doc.text(title, 148, 30, null, null, 'center');
+            
+            // Add date and time
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 148, 40, null, null, 'center');
+            
+            // Add page border
+            doc.setDrawColor(30, 64, 175);
+            doc.setLineWidth(0.5);
+            doc.rect(10, 10, 276, 186);
+            
+            // Create table
             doc.autoTable({
-                startY: 30,
+                startY: 50,
                 head: [headers],
                 body: rows,
                 theme: 'grid',
-                styles: { fontSize: 9 },
-                headStyles: { fillColor: [139, 92, 246] }
+                styles: { 
+                    fontSize: 8,
+                    cellPadding: 3,
+                    overflow: 'linebreak',
+                    lineWidth: 0.1
+                },
+                headStyles: { 
+                    fillColor: [30, 64, 175],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold'
+                },
+                alternateRowStyles: {
+                    fillColor: [240, 240, 240]
+                },
+                margin: { top: 50, left: 10, right: 10 },
+                tableWidth: 'auto',
+                showHead: 'everyPage',
+                didDrawPage: function(data) {
+                    // Footer on each page
+                    doc.setFontSize(8);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(`Page ${data.pageNumber} of ${data.pageCount}`, 148, 190, null, null, 'center');
+                    doc.text('Confidential - Tower Manufacturing Management System', 148, 195, null, null, 'center');
+                }
             });
             
-            doc.save(`Report-${new Date().toISOString().split('T')[0]}.pdf`);
-            showToast('Report exported to PDF', 'success');
+            doc.save(`Report-${title.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`);
+            showToast(translations[currentLanguage].reportExportedPDF, 'success');
         }
 
         // ============= UTILITY FUNCTIONS =============
@@ -2609,7 +3230,7 @@
 
         function renderRecentProduction() {
             const container = document.getElementById('recentProductionContainer');
-            const recent = productionDB.slice(-5).reverse(); // Last 5 records
+            const recent = productionDB.slice(-5).reverse();
             
             if (recent.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-500 py-8">No recent production records</p>';
@@ -2737,7 +3358,7 @@
             };
             
             localStorage.setItem('productionPreferences', JSON.stringify(productionPreferences));
-            showToast('Preferences saved', 'success');
+            showToast(translations[currentLanguage].preferencesSaved, 'success');
         }
 
         function loadProductionPreferences() {
@@ -2802,7 +3423,7 @@
                 };
                 reader.readAsArrayBuffer(file);
                 
-                showToast('File loaded successfully', 'success');
+                showToast(translations[currentLanguage].fileLoaded, 'success');
             }
         }
 
@@ -2824,7 +3445,7 @@
                 };
                 reader.readAsArrayBuffer(file);
                 
-                showToast('Work order file loaded', 'success');
+                showToast(translations[currentLanguage].woFileLoaded, 'success');
             }
         }
 
@@ -2844,7 +3465,7 @@
             }
 
             try {
-                showLoading('Processing data...');
+                showLoading(translations[currentLanguage].processing);
                 
                 const processedItems = [];
                 
@@ -2912,7 +3533,7 @@
                 currentExcelData = [];
                 
                 hideLoading();
-                showToast('Model data saved successfully', 'success');
+                showToast(translations[currentLanguage].modelSaved, 'success');
 
             } catch (error) {
                 hideLoading();
@@ -2967,7 +3588,7 @@
             }
 
             try {
-                showLoading('Processing work order...');
+                showLoading(translations[currentLanguage].processing);
                 
                 const workOrderItems = [];
                 
@@ -3065,7 +3686,7 @@
                 showWorkOrderDetails(workOrder.id);
                 
                 hideLoading();
-                showToast('Work order processed successfully', 'success');
+                showToast(translations[currentLanguage].woProcessed, 'success');
 
             } catch (error) {
                 hideLoading();
@@ -3078,11 +3699,11 @@
             const op = opName.toString().trim().toLowerCase();
             const sectionStr = section.toString().trim().toUpperCase();
             
-            // التحقق مما إذا كان القطاع من الصاج (يبدأ بـ P أو F)
+            // Check if section is sheet metal (starts with P or F)
             const isSheetMetal = sectionStr.startsWith('P') || sectionStr.startsWith('F');
             
             if (isSheetMetal) {
-                // للصاج: Shearing و Cropping يتمان معاً على نفس الماكينة Shear
+                // For sheet metal: Shearing and Cropping done together on same machine Shear
                 if (op.includes('shear') || op.includes('shearing') || op.includes('cutting') || op.includes('crop')) {
                     return { machine: "Shear", type: 'shearing' };
                 }
@@ -3097,7 +3718,7 @@
                 }
             }
             
-            // إذا لم يكن من الصاج، نتعامل معه كالمعتاد للزوايا
+            // If not sheet metal, treat as angle
             const isAngle = sectionStr.startsWith('L');
             
             if (isAngle && (op.includes('min') || op === 'minimum')) {
@@ -3332,7 +3953,7 @@
         // ============= DROPDOWN POPULATION =============
         function populateTowerTypeDropdown() {
             const towerTypeSelect = document.getElementById('workOrderTowerType');
-            towerTypeSelect.innerHTML = '<option value="" disabled selected>Select type...</option>';
+            towerTypeSelect.innerHTML = '<option value="" disabled selected data-i18n="selectType">Select type...</option>';
             
             const towerTypes = [...new Set(db.map(item => item.type))];
             towerTypes.forEach(type => {
@@ -3342,13 +3963,13 @@
                 towerTypeSelect.appendChild(option);
             });
             
-            document.getElementById('workOrderModel').innerHTML = '<option value="" disabled selected>Select model...</option>';
+            document.getElementById('workOrderModel').innerHTML = '<option value="" disabled selected data-i18n="selectModel">Select model...</option>';
         }
 
         function populateModelDropdown() {
             const towerType = document.getElementById('workOrderTowerType').value;
             const modelSelect = document.getElementById('workOrderModel');
-            modelSelect.innerHTML = '<option value="" disabled selected>Select model...</option>';
+            modelSelect.innerHTML = '<option value="" disabled selected data-i18n="selectModel">Select model...</option>';
             
             if (towerType) {
                 const models = db.filter(item => item.type === towerType);
@@ -3363,7 +3984,7 @@
 
         function populateProductionTowerTypeDropdown() {
             const towerTypeSelect = document.getElementById('productionTowerType');
-            towerTypeSelect.innerHTML = '<option value="" disabled selected>Select type...</option>';
+            towerTypeSelect.innerHTML = '<option value="" disabled selected data-i18n="selectType">Select type...</option>';
             
             const towerTypes = [...new Set(db.map(item => item.type))];
             towerTypes.forEach(type => {
@@ -3373,15 +3994,15 @@
                 towerTypeSelect.appendChild(option);
             });
             
-            document.getElementById('productionModel').innerHTML = '<option value="" disabled selected>Select model...</option>';
-            document.getElementById('productionWorkOrder').innerHTML = '<option value="" disabled selected>Select work order...</option>';
+            document.getElementById('productionModel').innerHTML = '<option value="" disabled selected data-i18n="selectModel">Select model...</option>';
+            document.getElementById('productionWorkOrder').innerHTML = '<option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>';
             document.getElementById('productionProject').innerHTML = '<option value="" disabled selected>Will be filled automatically...</option>';
         }
 
         function populateProductionModelDropdown() {
             const towerType = document.getElementById('productionTowerType').value;
             const modelSelect = document.getElementById('productionModel');
-            modelSelect.innerHTML = '<option value="" disabled selected>Select model...</option>';
+            modelSelect.innerHTML = '<option value="" disabled selected data-i18n="selectModel">Select model...</option>';
             
             if (towerType) {
                 const models = db.filter(item => item.type === towerType);
@@ -3398,7 +4019,7 @@
             const towerType = document.getElementById('productionTowerType').value;
             const model = document.getElementById('productionModel').value;
             const workOrderSelect = document.getElementById('productionWorkOrder');
-            workOrderSelect.innerHTML = '<option value="" disabled selected>Select work order...</option>';
+            workOrderSelect.innerHTML = '<option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>';
             
             if (towerType && model) {
                 const workOrders = workOrdersDB.filter(wo => wo.type === towerType && wo.model === model);
@@ -3464,13 +4085,13 @@
             const selectedOption = document.getElementById('availableItemsSelect').selectedOptions[0];
             const operationName = selectedOption.getAttribute('data-operation');
             
-            // التحقق مما إذا كان القطاع من الصاج
+            // Check if section is sheet metal
             const isSheetMetal = item.section.toString().trim().toUpperCase().startsWith('P') || 
                                  item.section.toString().trim().toUpperCase().startsWith('F');
             
-            // إذا كانت الماكينة Shear والقطاع من الصاج، نحتاج إلى تحديث عمليتي Shearing و Cropping معاً
+            // If machine is Shear and section is sheet metal, we need to update both Shearing and Cropping together
             if (isSheetMetal && machine === "Shear") {
-                // البحث عن عمليتي Shearing و Cropping في العمليات
+                // Find Shearing and Cropping operations
                 const shearingOperation = item.operations.find(op => 
                     op.name.toLowerCase().includes('shear') || 
                     op.name.toLowerCase().includes('cutting')
@@ -3480,7 +4101,7 @@
                     op.name.toLowerCase().includes('crop')
                 );
                 
-                // تحديث عملية Shearing
+                // Update Shearing operation
                 if (shearingOperation) {
                     const shearingOpName = shearingOperation.name;
                     if (!item.completedOperations[shearingOpName]) {
@@ -3497,7 +4118,7 @@
                     }
                 }
                 
-                // تحديث عملية Cropping أيضاً (إذا كانت موجودة)
+                // Update Cropping operation too (if exists)
                 if (croppingOperation) {
                     const croppingOpName = croppingOperation.name;
                     if (!item.completedOperations[croppingOpName]) {
@@ -3513,7 +4134,7 @@
                         }
                     }
                     
-                    // تسجيل عملية Cropping أيضاً في سجل الإنتاج
+                    // Record Cropping operation in production record
                     const croppingProductionRecord = {
                         id: Date.now() + 1,
                         workOrderId: parseInt(workOrderId),
@@ -3540,7 +4161,7 @@
                 }
             }
             
-            // تحديث العملية الأصلية (للعمليات الأخرى أو للزوايا)
+            // Update original operation (for other operations or angles)
             if (!isSheetMetal || machine !== "Shear") {
                 // Get current completion status for this operation
                 const operationCompletion = item.completedOperations[operationName];
@@ -3633,7 +4254,7 @@
             saveProductionPreferences();
             
             // Reset form
-            document.getElementById('availableItemsSelect').innerHTML = '<option value="" disabled selected>Select item...</option>';
+            document.getElementById('availableItemsSelect').innerHTML = '<option value="" disabled selected data-i18n="selectItem">Select item...</option>';
             document.getElementById('itemDetails').classList.add('hidden');
             document.getElementById('quantityWarning').classList.add('hidden');
             document.getElementById('productionQuantity').value = 1;
@@ -3649,7 +4270,7 @@
             renderProductionList();
             renderWorkOrdersList();
             
-            showToast('Production recorded successfully', 'success');
+            showToast(translations[currentLanguage].productionRecorded, 'success');
         }
 
         // ============= AVAILABLE ITEMS MANAGEMENT =============
@@ -3666,7 +4287,7 @@
             if (!workOrder) return;
 
             const availableItemsSelect = document.getElementById('availableItemsSelect');
-            availableItemsSelect.innerHTML = '<option value="" disabled selected>Select item...</option>';
+            availableItemsSelect.innerHTML = '<option value="" disabled selected data-i18n="selectItem">Select item...</option>';
             
             currentAvailableItems = [];
             let hasItems = false;
@@ -3675,7 +4296,7 @@
                 // Check if item is already completed
                 if (item.status === 'Completed') return;
 
-                // التحقق مما إذا كان القطاع من الصاج
+                // Check if section is sheet metal
                 const isSheetMetal = item.section.toString().trim().toUpperCase().startsWith('P') || 
                                      item.section.toString().trim().toUpperCase().startsWith('F');
                 
@@ -3708,11 +4329,11 @@
                                 const option = document.createElement('option');
                                 option.value = itemIndex;
                                 
-                                // للصاج على ماكينة Shear، نظهر فقط Shearing لأن Cropping يتم تلقائياً
+                                // For sheet metal on Shear machine, show only Shearing because Cropping is done automatically
                                 let displayName = operation.name;
                                 if (isSheetMetal && machine === 'Shear') {
                                     if (operation.name.toLowerCase().includes('crop')) {
-                                        // لا نعرض Cropping كخيار منفصل
+                                        // Don't show Cropping as separate option
                                         return;
                                     }
                                     if (operation.name.toLowerCase().includes('shear') || operation.name.toLowerCase().includes('cutting')) {
@@ -3806,12 +4427,12 @@
             const op = operationName.toString().trim().toLowerCase();
             const sectionStr = section.toString().trim().toUpperCase();
             
-            // التحقق مما إذا كان القطاع من الصاج (يبدأ بـ P أو F)
+            // Check if section is sheet metal (starts with P or F)
             const isSheetMetal = sectionStr.startsWith('P') || sectionStr.startsWith('F');
             
             if (isSheetMetal) {
                 if (machine === 'Shear') {
-                    // للصاج: Shear تقوم بعمليتي Shearing و Cropping معاً
+                    // For sheet metal: Shear does both Shearing and Cropping together
                     return op.includes('shear') || op.includes('shearing') || op.includes('cutting') || op.includes('crop');
                 }
                 if (machine === '83P') {
@@ -3825,7 +4446,7 @@
                 }
             }
             
-            // إذا لم يكن من الصاج، نتعامل معه كالمعتاد للزوايا
+            // If not sheet metal, treat as angle
             const isAngle = sectionStr.startsWith('L');
             
             if (machine === '206' || machine === '20.20' || machine === '10.10') {
@@ -4036,8 +4657,8 @@
             const workOrderSelect = document.getElementById('reportWorkOrder');
             const detailWorkOrderSelect = document.getElementById('detailReportWorkOrder');
             
-            workOrderSelect.innerHTML = '<option value="" disabled selected>Select work order...</option>';
-            detailWorkOrderSelect.innerHTML = '<option value="" disabled selected>Select work order...</option>';
+            workOrderSelect.innerHTML = '<option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>';
+            detailWorkOrderSelect.innerHTML = '<option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>';
             
             workOrdersDB.forEach(wo => {
                 const option = document.createElement('option');
@@ -4054,7 +4675,7 @@
 
         function populateDailyReportWorkOrders() {
             const select = document.getElementById('dailyReportWorkOrder');
-            select.innerHTML = '<option value="">All Work Orders</option>';
+            select.innerHTML = '<option value="" data-i18n="allWorkOrders">All Work Orders</option>';
             
             workOrdersDB.forEach(wo => {
                 const option = document.createElement('option');
@@ -4078,7 +4699,7 @@
             if (!workOrder) return;
             
             // Clear previous items
-            itemSelect.innerHTML = '<option value="" disabled selected>Select item...</option>';
+            itemSelect.innerHTML = '<option value="" disabled selected data-i18n="selectItem">Select item...</option>';
             
             // Populate dropdown with work order items
             workOrder.items.forEach((item, index) => {
@@ -4091,11 +4712,246 @@
             container.classList.remove('hidden');
         }
 
+        // ============= OPERATION STATUS REPORT =============
+        function populateWorkOrdersForOperation() {
+            const phase = document.getElementById('operationPhase').value;
+            const container = document.getElementById('operationWorkOrderContainer');
+            
+            if (!phase) {
+                container.classList.add('hidden');
+                return;
+            }
+            
+            const workOrderSelect = document.getElementById('operationWorkOrder');
+            workOrderSelect.innerHTML = '<option value="" disabled selected data-i18n="selectWorkOrder">Select work order...</option>';
+            
+            // Filter work orders that have items with this operation phase
+            workOrdersDB.forEach(wo => {
+                const hasOperation = wo.items.some(item => 
+                    item.operations.some(op => {
+                        const opName = op.name.toLowerCase();
+                        return opName.includes(phase) || 
+                               (phase === 'crop' && (opName.includes('crop') || opName.includes('cut'))) ||
+                               (phase === 'cut' && (opName.includes('cut') || opName.includes('shear')));
+                    })
+                );
+                
+                if (hasOperation) {
+                    const option = document.createElement('option');
+                    option.value = wo.id;
+                    option.textContent = `${wo.workOrderName} - ${wo.projectName}`;
+                    workOrderSelect.appendChild(option);
+                }
+            });
+            
+            container.classList.remove('hidden');
+        }
+
+        function generateOperationStatusReport() {
+            const phase = document.getElementById('operationPhase').value;
+            const workOrderId = document.getElementById('operationWorkOrder').value;
+            
+            if (!phase || !workOrderId) {
+                showToast(translations[currentLanguage].selectWOOp, 'warning');
+                return;
+            }
+            
+            const workOrder = workOrdersDB.find(wo => wo.id === parseInt(workOrderId));
+            if (!workOrder) return;
+            
+            // Filter items that have this operation phase
+            const itemsWithPhase = workOrder.items.filter(item => 
+                item.operations.some(op => {
+                    const opName = op.name.toLowerCase();
+                    return opName.includes(phase) || 
+                           (phase === 'crop' && (opName.includes('crop') || opName.includes('cut'))) ||
+                           (phase === 'cut' && (opName.includes('cut') || opName.includes('shear')));
+                })
+            );
+            
+            if (itemsWithPhase.length === 0) {
+                showToast('No items found with this operation phase', 'warning');
+                return;
+            }
+            
+            // Calculate statistics
+            const totalItems = itemsWithPhase.length;
+            const totalQuantity = itemsWithPhase.reduce((sum, item) => sum + item.quantity, 0);
+            const totalWeight = itemsWithPhase.reduce((sum, item) => sum + (item.totalWeight || 0), 0);
+            
+            let completedQuantity = 0;
+            let readyQuantity = 0; // Items ready for this operation (previous operation completed)
+            let inProgressQuantity = 0;
+            let pendingQuantity = 0;
+            
+            itemsWithPhase.forEach(item => {
+                // Find the target operation
+                const targetOpIndex = item.operations.findIndex(op => {
+                    const opName = op.name.toLowerCase();
+                    return opName.includes(phase) || 
+                           (phase === 'crop' && (opName.includes('crop') || opName.includes('cut'))) ||
+                           (phase === 'cut' && (opName.includes('cut') || opName.includes('shear')));
+                });
+                
+                if (targetOpIndex >= 0) {
+                    const targetOp = item.operations[targetOpIndex];
+                    const opCompletion = item.completedOperations[targetOp.name];
+                    
+                    if (opCompletion && opCompletion.completedQuantity >= item.quantity) {
+                        completedQuantity += item.quantity;
+                    } else {
+                        // Check if previous operations are completed
+                        let previousOpsCompleted = true;
+                        for (let i = 0; i < targetOpIndex; i++) {
+                            const prevOp = item.operations[i];
+                            const prevOpCompletion = item.completedOperations[prevOp.name];
+                            if (!prevOpCompletion || prevOpCompletion.completedQuantity < item.quantity) {
+                                previousOpsCompleted = false;
+                                break;
+                            }
+                        }
+                        
+                        if (previousOpsCompleted) {
+                            readyQuantity += item.quantity;
+                        } else {
+                            pendingQuantity += item.quantity;
+                        }
+                        
+                        if (opCompletion && opCompletion.completedQuantity > 0) {
+                            inProgressQuantity += opCompletion.completedQuantity;
+                        }
+                    }
+                }
+            });
+            
+            // Generate report
+            document.getElementById('reportTitle').textContent = `Operation Status Report - ${phase.toUpperCase()} - ${workOrder.workOrderName}`;
+            
+            const header = document.getElementById('reportTableHeader');
+            const body = document.getElementById('reportTableBody');
+            
+            header.innerHTML = `
+                <tr>
+                    <th>#</th>
+                    <th data-i18n="itemName">Item Name</th>
+                    <th data-i18n="section">Section</th>
+                    <th data-i18n="steelGrade">Steel Grade</th>
+                    <th data-i18n="totalQty">Total Quantity</th>
+                    <th data-i18n="weightPiece">Weight/Piece</th>
+                    <th data-i18n="totalWeight">Total Weight</th>
+                    <th>Operation Phase</th>
+                    <th data-i18n="completed">Completed</th>
+                    <th>In Progress</th>
+                    <th>Ready for ${phase}</th>
+                    <th data-i18n="pending">Pending</th>
+                    <th data-i18n="status">Status</th>
+                </tr>
+            `;
+            
+            body.innerHTML = '';
+            
+            // Sort items by section descending
+            const sortedItems = [...itemsWithPhase].sort((a, b) => b.section.localeCompare(a.section));
+            
+            sortedItems.forEach((item, index) => {
+                // Find the target operation
+                const targetOp = item.operations.find(op => {
+                    const opName = op.name.toLowerCase();
+                    return opName.includes(phase) || 
+                           (phase === 'crop' && (opName.includes('crop') || opName.includes('cut'))) ||
+                           (phase === 'cut' && (opName.includes('cut') || opName.includes('shear')));
+                });
+                
+                if (!targetOp) return;
+                
+                const opCompletion = item.completedOperations[targetOp.name];
+                const completed = opCompletion ? opCompletion.completedQuantity : 0;
+                const remaining = item.quantity - completed;
+                
+                // Check if previous operations are completed
+                const targetOpIndex = item.operations.findIndex(op => op.name === targetOp.name);
+                let previousOpsCompleted = true;
+                let readyForPhase = false;
+                
+                for (let i = 0; i < targetOpIndex; i++) {
+                    const prevOp = item.operations[i];
+                    const prevOpCompletion = item.completedOperations[prevOp.name];
+                    if (!prevOpCompletion || prevOpCompletion.completedQuantity < item.quantity) {
+                        previousOpsCompleted = false;
+                        break;
+                    }
+                }
+                
+                readyForPhase = previousOpsCompleted && completed < item.quantity;
+                
+                let statusText = 'Pending';
+                let statusClass = 'badge-danger';
+                
+                if (completed >= item.quantity) {
+                    statusText = 'Completed';
+                    statusClass = 'badge-success';
+                } else if (completed > 0) {
+                    statusText = 'In Progress';
+                    statusClass = 'badge-warning';
+                } else if (readyForPhase) {
+                    statusText = 'Ready';
+                    statusClass = 'badge-info';
+                }
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="font-bold">${item.itemName}</td>
+                    <td class="font-bold">${item.section}</td>
+                    <td>${item.steelGrade || '-'}</td>
+                    <td class="font-bold">${item.quantity}</td>
+                    <td class="font-bold">${item.weightPerPiece || '0'}</td>
+                    <td class="font-bold">${item.totalWeight || '0'}</td>
+                    <td>
+                        <span class="badge badge-primary">${targetOp.name}</span>
+                    </td>
+                    <td class="text-green-600 font-bold">${completed}</td>
+                    <td class="${completed > 0 && completed < item.quantity ? 'text-orange-600 font-bold' : 'text-gray-600'}">
+                        ${completed > 0 && completed < item.quantity ? completed : '0'}
+                    </td>
+                    <td class="${readyForPhase ? 'text-blue-600 font-bold' : 'text-gray-600'}">
+                        ${readyForPhase ? (item.quantity - completed) : '0'}
+                    </td>
+                    <td class="${remaining > 0 && !readyForPhase ? 'text-red-600 font-bold' : 'text-gray-600'}">
+                        ${remaining > 0 && !readyForPhase ? remaining : '0'}
+                    </td>
+                    <td>
+                        <span class="badge ${statusClass}">${statusText}</span>
+                    </td>
+                `;
+                body.appendChild(tr);
+            });
+            
+            // Add summary row
+            const summaryTr = document.createElement('tr');
+            summaryTr.className = 'bg-blue-50 font-bold';
+            summaryTr.innerHTML = `
+                <td colspan="3">Summary - ${phase.toUpperCase()} Operation</td>
+                <td>Total Items: ${totalItems}</td>
+                <td>Total Qty: ${totalQuantity}</td>
+                <td colspan="2">Total Weight: ${totalWeight.toFixed(2)} kg</td>
+                <td>Completed: ${completedQuantity}</td>
+                <td>In Progress: ${inProgressQuantity}</td>
+                <td>Ready: ${readyQuantity}</td>
+                <td>Pending: ${pendingQuantity}</td>
+                <td>Progress: ${Math.round((completedQuantity / totalQuantity) * 100)}%</td>
+            `;
+            body.appendChild(summaryTr);
+            
+            document.getElementById('reportResults').classList.remove('hidden');
+            document.getElementById('reportResults').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function generateItemsStatusReport() {
             const workOrderId = document.getElementById('reportWorkOrder').value;
             
             if (!workOrderId) {
-                showToast('Please select work order', 'warning');
+                showToast(translations[currentLanguage].selectWO, 'warning');
                 return;
             }
             
@@ -4110,17 +4966,17 @@
             header.innerHTML = `
                 <tr>
                     <th>#</th>
-                    <th>Item Name</th>
-                    <th>Section</th>
-                    <th>Steel Grade</th>
-                    <th>Quantity</th>
-                    <th>Weight/Piece</th>
-                    <th>Total Weight</th>
-                    <th>Completed</th>
-                    <th>Remaining</th>
+                    <th data-i18n="itemName">Item Name</th>
+                    <th data-i18n="section">Section</th>
+                    <th data-i18n="steelGrade">Steel Grade</th>
+                    <th data-i18n="quantity">Quantity</th>
+                    <th data-i18n="weightPiece">Weight/Piece</th>
+                    <th data-i18n="totalWeight">Total Weight</th>
+                    <th data-i18n="completed">Completed</th>
+                    <th data-i18n="remaining">Remaining</th>
                     <th>Current Phase</th>
                     <th>Last Phase Reached</th>
-                    <th>Status</th>
+                    <th data-i18n="status">Status</th>
                     <th>Progress</th>
                 </tr>
             `;
@@ -4246,14 +5102,14 @@
             header.innerHTML = `
                 <tr>
                     <th>#</th>
-                    <th>Operation</th>
-                    <th>Machine</th>
-                    <th>Operator</th>
-                    <th>Quantity</th>
-                    <th>Weight Produced</th>
+                    <th data-i18n="operation">Operation</th>
+                    <th data-i18n="machine">Machine</th>
+                    <th data-i18n="operator">Operator</th>
+                    <th data-i18n="quantity">Quantity</th>
+                    <th data-i18n="weightProduced">Weight Produced</th>
                     <th>Operation Date</th>
-                    <th>Shift</th>
-                    <th>Status</th>
+                    <th data-i18n="shift">Shift</th>
+                    <th data-i18n="status">Status</th>
                 </tr>
             `;
             
@@ -4345,7 +5201,7 @@
             const workOrderId = document.getElementById('dailyReportWorkOrder').value;
             
             if (!fromDate || !toDate) {
-                showToast('Please select date range', 'warning');
+                showToast(translations[currentLanguage].selectWODate, 'warning');
                 return;
             }
             
@@ -4411,16 +5267,16 @@
             header.innerHTML = `
                 <tr>
                     <th>#</th>
-                    <th>Work Order</th>
-                    <th>Item Name</th>
-                    <th>Section</th>
-                    <th>Operation</th>
-                    <th>Machine</th>
-                    <th>Operator</th>
-                    <th>Quantity</th>
-                    <th>Weight Produced</th>
-                    <th>Shift</th>
-                    <th>Date</th>
+                    <th data-i18n="workOrder">Work Order</th>
+                    <th data-i18n="itemName">Item Name</th>
+                    <th data-i18n="section">Section</th>
+                    <th data-i18n="operation">Operation</th>
+                    <th data-i18n="machine">Machine</th>
+                    <th data-i18n="operator">Operator</th>
+                    <th data-i18n="quantity">Quantity</th>
+                    <th data-i18n="weightProduced">Weight Produced</th>
+                    <th data-i18n="shift">Shift</th>
+                    <th data-i18n="date">Date</th>
                 </tr>
             `;
             
@@ -4487,7 +5343,100 @@
         }
 
         function printReport() {
-            window.print();
+            const reportSection = document.getElementById('reportResults');
+            
+            // Create a print-friendly version
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${document.getElementById('reportTitle').textContent}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        h1 { color: #1e40af; text-align: center; margin-bottom: 10px; }
+                        h2 { color: #374151; text-align: center; margin-bottom: 20px; font-size: 14px; }
+                        .print-header { 
+                            border-bottom: 2px solid #1e40af; 
+                            padding-bottom: 10px; 
+                            margin-bottom: 20px; 
+                            text-align: center;
+                        }
+                        .print-footer { 
+                            border-top: 1px solid #ccc; 
+                            padding-top: 10px; 
+                            margin-top: 30px; 
+                            text-align: center;
+                            font-size: 10px;
+                            color: #666;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                            font-size: 10pt;
+                        }
+                        th {
+                            background-color: #1e40af;
+                            color: white;
+                            padding: 8px;
+                            text-align: left;
+                            border: 1px solid #ddd;
+                        }
+                        td {
+                            padding: 6px;
+                            border: 1px solid #ddd;
+                        }
+                        tr:nth-child(even) {
+                            background-color: #f9fafb;
+                        }
+                        .completed-first {
+                            background-color: #f0fdf4 !important;
+                        }
+                        .summary-row {
+                            background-color: #dbeafe !important;
+                            font-weight: bold;
+                        }
+                        .total-row {
+                            background-color: #fef3c7 !important;
+                            font-weight: bold;
+                        }
+                        @media print {
+                            body { margin: 0; padding: 10px; }
+                            .no-print { display: none !important; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="print-header">
+                        <h1>Tower Manufacturing Management System</h1>
+                        <h2>${document.getElementById('reportTitle').textContent}</h2>
+                        <p>Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</p>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            ${document.querySelector('#reportTableHeader').outerHTML}
+                        </thead>
+                        <tbody>
+                            ${document.querySelector('#reportTableBody').outerHTML}
+                        </tbody>
+                    </table>
+                    
+                    <div class="print-footer">
+                        <p>Confidential - Tower Manufacturing Management System</p>
+                        <p>Page 1 of 1 - Printed on ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                            setTimeout(() => window.close(), 500);
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
         }
 
         // ============= EXPORT FUNCTIONS =============
@@ -4611,7 +5560,7 @@
         // ============= HELPER FUNCTIONS =============
         function refreshDashboard() {
             updateDashboard();
-            showToast('Dashboard refreshed', 'success');
+            showToast(translations[currentLanguage].dashboardRefreshed, 'success');
         }
 
         function clearProductionForm() {
@@ -4619,9 +5568,9 @@
                 document.getElementById('productionForm').reset();
                 document.getElementById('productionDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('productionProject').innerHTML = '<option value="" disabled selected>Will be filled automatically...</option>';
-                document.getElementById('productionOperatorSelect').innerHTML = '<option value="" disabled selected>Select operator...</option>';
+                document.getElementById('productionOperatorSelect').innerHTML = '<option value="" disabled selected data-i18n="selectOperator">Select operator...</option>';
                 document.getElementById('availableItemsContainer').classList.add('hidden');
-                document.getElementById('availableItemsSelect').innerHTML = '<option value="" disabled selected>Select item...</option>';
+                document.getElementById('availableItemsSelect').innerHTML = '<option value="" disabled selected data-i18n="selectItem">Select item...</option>';
                 document.getElementById('itemDetails').classList.add('hidden');
                 
                 productionPreferences = {
@@ -4637,7 +5586,7 @@
                 
                 populateProductionTowerTypeDropdown();
                 
-                showToast('Fields cleared', 'success');
+                showToast(translations[currentLanguage].fieldsCleared, 'success');
             }
         }
 

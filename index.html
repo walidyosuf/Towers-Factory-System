@@ -978,7 +978,6 @@
             opacity: 0.9;
         }
 
-        /* تحسينات Dashboard */
         .dashboard-card {
             background: white;
             border-radius: 16px;
@@ -1046,7 +1045,6 @@
             transition: width 0.5s ease;
         }
 
-        /* تحسينات التقارير */
         .report-card {
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -1104,7 +1102,6 @@
             margin: 0.5rem 0 0 0;
         }
 
-        /* Footer */
         .app-footer {
             text-align: center;
             padding: 1.5rem;
@@ -1126,7 +1123,6 @@
             opacity: 0.7;
         }
 
-        /* تحسينات عامة */
         .section-title {
             font-size: 1.5rem;
             font-weight: bold;
@@ -1191,7 +1187,6 @@
             }
         }
 
-        /* تحسينات الجداول للتقرير */
         .compact-table {
             width: 100%;
             border-collapse: collapse;
@@ -1227,7 +1222,6 @@
             max-width: 100%;
         }
         
-        /* تحسينات للجداول في التقارير */
         .operation-status-table {
             min-width: auto !important;
             width: 100% !important;
@@ -4060,7 +4054,7 @@
             if (!model) return;
 
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF('p', 'mm', 'a4');
             
             // Add header with creator credit
             doc.setFontSize(10);
@@ -4091,16 +4085,25 @@
                 head: [['#', 'Item Name', 'Section', 'Steel Grade', 'Operations']],
                 body: tableData,
                 theme: 'grid',
-                styles: { fontSize: 10 },
-                headStyles: { fillColor: [26, 35, 126] }
+                styles: { 
+                    fontSize: 10,
+                    cellPadding: 4,
+                    overflow: 'linebreak'
+                },
+                headStyles: { 
+                    fillColor: [26, 35, 126],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold'
+                },
+                margin: { top: 90, left: 14, right: 14 },
+                tableWidth: 'auto',
+                showHead: 'everyPage',
+                didDrawPage: function(data) {
+                    doc.setFontSize(8);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(`Page ${data.pageNumber} of ${data.pageCount}`, 105, doc.internal.pageSize.height - 10, null, null, 'center');
+                }
             });
-            
-            const pageCount = doc.internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.text(`Page ${i} of ${pageCount}`, 105, doc.internal.pageSize.height - 10, null, null, 'center');
-            }
             
             doc.save(`Model-${model.model}.pdf`);
             showToast(translations[currentLanguage].modelExportedPDF, 'success');
@@ -4110,7 +4113,7 @@
             if (!currentWorkOrder) return;
 
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF('p', 'mm', 'a4');
             
             // Add header with creator credit
             doc.setFontSize(10);
@@ -4159,16 +4162,34 @@
                 head: [['#', 'Item Name', 'Section', 'Steel Grade', 'Length', 'Quantity', 'Weight/Piece', 'Total Weight', 'Completed', 'Remaining', 'Status']],
                 body: tableData,
                 theme: 'grid',
-                styles: { fontSize: 7 },
-                headStyles: { fillColor: [255, 152, 0] }
+                styles: { 
+                    fontSize: 7,
+                    cellPadding: 3,
+                    overflow: 'linebreak'
+                },
+                headStyles: { 
+                    fillColor: [255, 152, 0],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold'
+                },
+                columnStyles: {
+                    0: { cellWidth: 10 },
+                    5: { cellWidth: 15 },
+                    6: { cellWidth: 15 },
+                    7: { cellWidth: 15 },
+                    8: { cellWidth: 15 },
+                    9: { cellWidth: 15 },
+                    10: { cellWidth: 15 }
+                },
+                margin: { top: 110, left: 10, right: 10 },
+                tableWidth: 'auto',
+                showHead: 'everyPage',
+                didDrawPage: function(data) {
+                    doc.setFontSize(8);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(`Page ${data.pageNumber} of ${data.pageCount}`, 105, doc.internal.pageSize.height - 10, null, null, 'center');
+                }
             });
-            
-            const pageCount = doc.internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.text(`Page ${i} of ${pageCount}`, 105, doc.internal.pageSize.height - 10, null, null, 'center');
-            }
             
             doc.save(`Work-Order-${currentWorkOrder.workOrderName}.pdf`);
             showToast(translations[currentLanguage].woExportedPDF, 'success');
@@ -4178,7 +4199,7 @@
             if (!currentProduction) return;
 
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF('p', 'mm', 'a4');
             
             // Add header with creator credit
             doc.setFontSize(10);
@@ -4204,7 +4225,7 @@
             doc.text(`Time: ${new Date(currentProduction.timestamp).toLocaleTimeString()}`, 130, 90);
             
             if (currentProduction.notes) {
-                doc.text(`Notes: ${currentProduction.notes}`, 20, 110);
+                doc.text(`Notes: ${currentProduction.notes.substring(0, 80)}`, 20, 110);
             }
             
             doc.setFontSize(10);
@@ -4223,13 +4244,13 @@
 
         function exportReportToPDF() {
             const title = document.getElementById('reportTitle').textContent;
-            const headers = Array.from(document.querySelectorAll('#reportTableHeader th')).map(th => th.textContent);
+            const headers = Array.from(document.querySelectorAll('#reportTableHeader th')).map(th => th.textContent.trim());
             const rows = Array.from(document.querySelectorAll('#reportTableBody tr')).map(tr => 
-                Array.from(tr.querySelectorAll('td')).map(td => td.textContent)
+                Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim())
             );
 
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('landscape');
+            const doc = new jsPDF('l', 'mm', 'a4');
             
             // Add header with creator credit
             doc.setFontSize(10);
@@ -4267,50 +4288,56 @@
             doc.setTextColor(100, 100, 100);
             doc.text(`Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 148, 55, null, null, 'center');
             
-            // Format weight produced columns
-            const weightProducedIndex = headers.findIndex(header => header.trim() === 'Weight Produced');
-            if (weightProducedIndex !== -1) {
-                rows.forEach(row => {
-                    if (row[weightProducedIndex]) {
-                        // Remove non-numeric characters and format to 2 decimal places
-                        const weight = parseFloat(row[weightProducedIndex].replace(/[^\d.-]/g, ''));
-                        if (!isNaN(weight)) {
-                            row[weightProducedIndex] = weight.toFixed(2) + ' kg';
-                        }
-                    }
+            // Process data for PDF table
+            const tableData = rows.map(row => {
+                return row.map(cell => {
+                    // Remove HTML tags if present
+                    return cell.replace(/<[^>]*>/g, '');
                 });
-            }
+            });
+            
+            // Calculate column widths
+            const pageWidth = doc.internal.pageSize.width - 40;
+            const colCount = headers.length;
+            const colWidth = pageWidth / colCount;
             
             doc.autoTable({
                 startY: 65,
                 head: [headers],
-                body: rows,
+                body: tableData,
                 theme: 'grid',
                 styles: { 
                     fontSize: 8,
                     cellPadding: 3,
                     overflow: 'linebreak',
-                    lineWidth: 0.1
+                    lineWidth: 0.1,
+                    lineColor: [200, 200, 200],
+                    minCellHeight: 8
                 },
                 headStyles: { 
                     fillColor: [26, 35, 126],
                     textColor: [255, 255, 255],
-                    fontStyle: 'bold'
+                    fontStyle: 'bold',
+                    fontSize: 9
+                },
+                bodyStyles: {
+                    fontSize: 8
                 },
                 alternateRowStyles: {
-                    fillColor: [240, 240, 240]
+                    fillColor: [245, 245, 245]
                 },
-                margin: { top: 65, left: 10, right: 10 },
+                margin: { top: 65, left: 20, right: 20 },
                 tableWidth: 'auto',
                 showHead: 'everyPage',
+                columnStyles: {},
                 didDrawPage: function(data) {
                     doc.setFontSize(8);
                     doc.setTextColor(100, 100, 100);
-                    doc.text(`Page ${data.pageNumber} of ${data.pageCount}`, 148, doc.internal.pageSize.height - 20, null, null, 'center');
+                    doc.text(`Page ${data.pageNumber} of ${data.pageCount}`, 148, doc.internal.pageSize.height - 10, null, null, 'center');
                 }
             });
             
-            doc.save(`Report-${title.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`);
+            doc.save(`Report-${title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`);
             showToast(translations[currentLanguage].reportExportedPDF, 'success');
         }
 
@@ -6494,12 +6521,24 @@
                 Array.from(tr.querySelectorAll('td')).map(td => td.textContent)
             );
 
-            const exportData = [title, '', headers, ...rows];
+            const exportData = [];
+            
+            exportData.push([title]);
+            exportData.push(['']);
+            exportData.push(['@2026 Created by Walid Ahmed Yosuf']);
+            exportData.push(['Report Generated:', new Date().toLocaleString()]);
+            exportData.push(['']);
+            exportData.push(headers);
+            
+            rows.forEach(row => {
+                exportData.push(row);
+            });
+            
             const ws = XLSX.utils.aoa_to_sheet(exportData);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Report");
             
-            const fileName = `Report_${new Date().toISOString().split('T')[0]}.xlsx`;
+            const fileName = `Report_${title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-')}_${new Date().toISOString().split('T')[0]}.xlsx`;
             XLSX.writeFile(wb, fileName);
             
             showToast('Report exported to Excel', 'success');
@@ -6512,15 +6551,22 @@
                 Array.from(tr.querySelectorAll('td')).map(td => td.textContent)
             );
 
-            const exportData = [
-                [title],
-                [''],
-                ['@2026 Created by Walid Ahmed Yosuf'],
-                ['Report Generated:', new Date().toLocaleString()],
-                [''],
-                headers,
-                ...rows
-            ];
+            const exportData = [];
+            
+            exportData.push([title]);
+            exportData.push(['']);
+            exportData.push(['@2026 Created by Walid Ahmed Yosuf']);
+            exportData.push(['Report Generated:', new Date().toLocaleString()]);
+            exportData.push(['From Date:', document.getElementById('dailyReportFromDate').value]);
+            exportData.push(['To Date:', document.getElementById('dailyReportToDate').value]);
+            exportData.push(['Shift:', document.getElementById('dailyReportShift').value || 'All']);
+            exportData.push(['Machine:', document.getElementById('dailyReportMachine').value || 'All']);
+            exportData.push(['']);
+            exportData.push(headers);
+            
+            rows.forEach(row => {
+                exportData.push(row);
+            });
             
             const ws = XLSX.utils.aoa_to_sheet(exportData);
             const wb = XLSX.utils.book_new();
